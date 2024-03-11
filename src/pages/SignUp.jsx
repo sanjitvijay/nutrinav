@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 function SignUp() {
     const navigate = useNavigate();
-
     const [formData, setFormData] = useState({
         email: '',
         username: '',
@@ -25,8 +25,7 @@ function SignUp() {
         console.log('Username:', username)
         console.log('Password:', password)
     }
-    
-    
+
     return (
         <div className="flex justify-center items-center h-screen">
             <form className="flex flex-col">

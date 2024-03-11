@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import supabaseClient  from '../supabaseClient';
 
 function SignIn() {
     const navigate = useNavigate();
+    const supabase = supabaseClient();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -17,13 +19,27 @@ function SignIn() {
         }));
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
 
         console.log('Email:', email);
         console.log('Password:', password)
+
+        try{
+            await supabase.auth.signInWithPassword({
+                email,
+                password,
+            })
+
+            console.log('User signed in successfully')
+        } catch (error) {
+            console.log('Error:', error)
+        }
     }
-    
+
+    // const forgotPassword = async () => {
+        
+    // }
     
     return (
         <div className="flex justify-center items-center h-screen">
