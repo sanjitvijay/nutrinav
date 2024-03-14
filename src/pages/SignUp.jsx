@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import supabaseClient from '../supabaseClient';
 
 function SignUp() {
     const navigate = useNavigate();
+    const supabase = supabaseClient();
+
     const [formData, setFormData] = useState({
         email: '',
         username: '',
@@ -18,12 +20,27 @@ function SignUp() {
         }));
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
 
-        console.log('Email:', email);
-        console.log('Username:', username)
-        console.log('Password:', password)
+        // console.log('Email:', email);
+        // console.log('Username:', username)
+        // console.log('Password:', password)
+        try{
+            await supabase.auth.signUp({
+                email,
+                password
+            })
+
+            await supabase
+            .from('users')
+            .insert({username,email})
+            
+            console.log('User signed up successfully')
+        } catch (error) {
+            console.log('Error:', error)
+        }
+
     }
 
     return (

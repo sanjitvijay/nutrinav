@@ -14,7 +14,9 @@ function Home() {
             </div>
 
             <div className="p-5 hover:shadow-xl">
-                <button>Sign Up</button>
+                <button
+                    onClick={()=>navigate('/sign-up')}
+                >Sign Up</button>
             </div>
         </div>
 

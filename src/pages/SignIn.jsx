@@ -32,14 +32,16 @@ function SignIn() {
             })
 
             console.log('User signed in successfully')
+            navigate('/')
         } catch (error) {
             console.log('Error:', error)
         }
     }
 
-    // const forgotPassword = async () => {
-        
-    // }
+    const forgotPassword = async () => {
+        const { data, error } = await supabase.auth
+        .resetPasswordForEmail('user@email.com')
+    }
     
     return (
         <div className="flex justify-center items-center h-screen">
