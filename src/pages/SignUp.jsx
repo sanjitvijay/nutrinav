@@ -37,6 +37,7 @@ function SignUp() {
             .insert({username,email})
             
             console.log('User signed up successfully')
+            navigate('/dashboard')
         } catch (error) {
             console.log('Error:', error)
         }

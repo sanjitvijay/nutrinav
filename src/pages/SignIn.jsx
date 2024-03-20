@@ -32,7 +32,7 @@ function SignIn() {
             })
 
             console.log('User signed in successfully')
-            navigate('/')
+            navigate('/dashboard')
         } catch (error) {
             console.log('Error:', error)
         }
