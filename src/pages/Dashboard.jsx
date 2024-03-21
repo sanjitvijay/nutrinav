@@ -24,7 +24,7 @@ function Dashboard() {
         }
 
         fetchCalories()
-    }, [])
+    }, [supabase])
     return (
         <div className="flex justify-between items-center">
             <div>

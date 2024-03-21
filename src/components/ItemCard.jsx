@@ -9,20 +9,15 @@ function ItemCard({item}) {
     const updateUserValues = async () => {
         const { data: { user } } = await supabase.auth.getUser()
         const userId = user.id
-        console.log(user.id)
         if(userId !== null){
-            const {data, error} = await supabase.rpc('increment_column', {
+            const {error} = await supabase.rpc('increment_column', {
                 column_name: 'calories',
                 id: userId,
                 increment_value: Calories,
             })
             if(error){
                 console.log('Error:', error)
-            } else {
-                console.log('Data:', data)
-                console.log("Successfully updated user values")
-                
-            }
+            } 
         }
     }
     return (

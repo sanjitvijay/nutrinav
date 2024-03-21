@@ -1,5 +1,5 @@
 import supabaseClient from "../supabaseClient";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ItemCard from "../components/ItemCard";
 function AddFood() {
@@ -7,10 +7,11 @@ function AddFood() {
     const navigate = useNavigate()
 
     const [menu, setMenu] = useState([])
+    const [diningHall, setDiningHall] = useState('Bursley')
 
     const fetchMenu = async () => {
         const { data, error } = await supabase
-            .from('Bursley')
+            .from(diningHall)
             .select('*')
         if (error) {
             console.log('Error:', error)
@@ -18,15 +19,34 @@ function AddFood() {
             setMenu(data)
         }
     }
+
+    const onChange = (e) => {
+        setDiningHall(e.target.value)
+    }
     return (
         <div>
             <div className="flex justify-between items-center">
-                <button 
-                    className="bg-blue-500 hover:bg-blue-700 hover:shadow-lg text-white font-bold py-2 px-4 rounded mb-5"
-                    onClick={fetchMenu}
-                >
-                    Fetch Menu
-                </button>
+                
+                <div>
+                    <select 
+                        className="mr-5"
+                        onChange={onChange}>
+                        <option value="Bursley">Bursley</option>
+                        <option value="East Quad">East Quad</option>
+                        <option value="Markley">Markely</option>
+                        <option value="Mosher-Jordan">Mosher-Jordan</option>
+                        <option value="North Quad">North Quad</option>
+                        <option value="South Quad">South Quad</option>
+                        <option value="Twigs at Oxford">Twigs at Oxford</option>
+                    </select>
+
+                    <button 
+                        className="bg-blue-500 hover:bg-blue-700 hover:shadow-lg text-white font-bold py-2 px-4 rounded mb-5"
+                        onClick={fetchMenu}
+                    >
+                        Fetch Menu
+                    </button>
+                </div>
 
                 <button 
                     className="bg-blue-500 hover:bg-blue-700 hover:shadow-lg text-white font-bold py-2 px-4 rounded mb-5"
