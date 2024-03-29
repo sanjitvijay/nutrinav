@@ -34,12 +34,15 @@ function Dashboard() {
                 <h1 className="text-3xl font-bold"> Calories Remaining:</h1>
                 <h2 className="text-2xl">{caloriesRemaining} Calories</h2>    
             </div>
-            <button 
-                className="bg-blue-500 hover:bg-blue-700 hover:shadow-lg text-white font-bold py-2 px-4 rounded mb-5"
-                onClick={()=>navigate('/add-food')}
-            >
-                Add Food
-            </button>
+
+            <div>
+                <button 
+                    className="bg-blue-500 hover:bg-blue-700 hover:shadow-lg text-white font-bold py-2 px-4 rounded mb-5"
+                    onClick={()=>navigate('/add-food')}
+                >
+                    Add Food
+                </button>
+            </div>
         </div>
     );
 }
