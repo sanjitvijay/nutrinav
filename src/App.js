@@ -5,6 +5,7 @@ import TopNavbar from './components/TopNavbar';
 import SignUp from './pages/SignUp';
 import AddFood from './pages/AddFood';
 import Dashboard from './pages/Dashboard';
+import BottomNavbar from './components/BottomNavbar';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
+      <BottomNavbar/>
     </Router>
   )
 }
