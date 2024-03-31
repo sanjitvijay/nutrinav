@@ -5,19 +5,20 @@ function Home() {
 
     return (
         <div>   
-            <div className="p-5 hover:shadow-xl">
-                <button 
-                    onClick={()=>navigate('/sign-in')}
-                >
-                    Sign In
-                </button>
-            </div>
+            <button 
+                className="btn btn-primary text-white mr-10"
+                onClick={()=>navigate('/sign-in')}
+            >
+                Sign In
+            </button>
+            
 
-            <div className="p-5 hover:shadow-xl">
-                <button
-                    onClick={()=>navigate('/sign-up')}
-                >Sign Up</button>
-            </div>
+            <button 
+                className="btn btn-secondary text-white mr-10"
+                onClick={()=>navigate('/sign-up')}
+            >
+                Sign Up
+            </button>
         </div>
 
     );

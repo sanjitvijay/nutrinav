@@ -48,11 +48,11 @@ function SignIn() {
             <form className="flex flex-col">
 
                 <label className="mb-2">Email:</label>
-                <input 
+                <input
                     type="text" 
                     id="email" 
                     value={email}
-                    className="border border-black mb-2"
+                    className="input input-sm border-black border-1"
                     onChange={onChange}
                 />
 
@@ -61,7 +61,7 @@ function SignIn() {
                     type="text" 
                     id="password" 
                     value={password}
-                    className="border border-black mb-2" 
+                    className="input input-sm border-black border-1 mb-3"
                     onChange={onChange}
                 />
 

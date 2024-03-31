@@ -53,7 +53,7 @@ function SignUp() {
                     type="text" 
                     id="email" 
                     value={email}
-                    className="border border-black mb-2"
+                    className="input input-sm border-black border-1 mb-2"
                     onChange={onChange}
                 />
 
@@ -62,7 +62,7 @@ function SignUp() {
                     type="text" 
                     id="username" 
                     value={username}
-                    className="border border-black mb-2"
+                    className="input input-sm border-black border-1 mb-2"
                     onChange={onChange}
                 />
 
@@ -71,7 +71,7 @@ function SignUp() {
                     type="text" 
                     id="password" 
                     value={password}
-                    className="border border-black mb-2" 
+                    className="input input-sm border-black border-1 mb-2" 
                     onChange={onChange}
                 />
 
