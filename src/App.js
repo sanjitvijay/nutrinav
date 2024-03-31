@@ -5,6 +5,7 @@ import TopNavbar from './components/TopNavbar';
 import SignUp from './pages/SignUp';
 import AddFood from './pages/AddFood';
 import Dashboard from './pages/Dashboard';
+import Welcome from './pages/Welcome';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/add-food" element={<AddFood />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/welcome" element={<Welcome />} />
         </Routes>
       </div>
     </Router>

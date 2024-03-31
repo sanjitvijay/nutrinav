@@ -1,0 +1,255 @@
+/* Header Styles */
+header {
+    position: relative;
+    height: 10vh; /* Adjust as needed */
+    background-color: #ffffff; /* Adjust background color */
+}
+
+/* Title Styles */
+.title {
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 4vw; /* Adjust font size relative to viewport width */
+    line-height: 4vh; /* Adjust line height relative to viewport height */
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.02em;
+    color: #000000;
+    position: absolute;
+    left: 50%;
+    top: 25%; /* Adjust top position relative to viewport height */
+    transform: translate(-50%, -50%);
+    white-space: nowrap; /* Allow the text to wrap */
+    text-align: center; /* Center-align the text */
+    overflow: hidden; /* Prevent text from spilling out */
+}
+
+.subheader {
+    font-family: 'Nunito Sans', sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 2.5vw; /* Adjust font size relative to viewport width */
+    line-height: 2.5vh; /* Adjust line height relative to viewport height */
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.004em;
+    color: #000000;
+    position: absolute;
+    width: 34vw; /* Adjust width relative to viewport width */
+    height: 5vh; /* Adjust height relative to viewport height */
+    left: 40.1%; /* Center horizontally */
+    top: calc(23% + 4vh); /* Position right below the title */
+    transform: translateX(-67%); /* Center the subheader horizontally */
+    white-space: nowrap;
+}
+
+/* Hamburger Icon Styles */
+.hamburger-icon {
+    position: absolute;
+    width: 70px; /* Same width as the sign-up button */
+    height: 6vh; /* Same height as the sign-up button */
+    left: 2vw; /* Adjust left position relative to viewport width */
+    top: 1.8vh; /* Adjust top position relative to viewport height */
+    background-color: #ffffff; /* White background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden; /* Hide overflow */
+    border-radius: 1vw; /* Adjust border radius relative to viewport width */
+    /*border: 1px solid #000000; /* Add border with black color */
+}
+
+/* Hamburger Icon Lines */
+.hamburger-line {
+    position: absolute;
+    width: 80%; /* Adjust line width */
+    height: 2px; /* Adjust line height */
+    background-color: #000000; /* Black color */
+}
+
+/*.hamburger-icon:hover {
+    background-color: #333333;
+}
+
+/* Positioning the lines */
+.line-top {
+    top: 20%; /* Adjust vertical position */
+}
+
+.line-middle {
+    top: 50%; /* Adjust vertical position */
+}
+
+.line-bottom {
+    top: 80%; /* Adjust vertical position */
+}
+
+/* Logo Styles */
+.logo {
+    position: absolute;
+    width: 25vw; /* Adjust width relative to viewport width */
+    height: 10vh; /* Adjust height relative to viewport height */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url('file:///Users/zionm/Downloads/Screen_Shot_2024-03-30_at_1.08.49_AM-removebg-preview.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Sign Up Button Styles */
+.sign-up-button {
+    position: absolute;
+    width: 20vw; /* Adjust width relative to viewport width */
+    max-width: 200px;
+    min-height: 6vh; /* Use min-height to ensure the button expands as needed for the text */
+    right: 2vw;
+    top: 2vh;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px; /* Use a fixed font size for consistent readability */
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 1vw; /* Adjust border radius relative to viewport width */
+    white-space: normal; /* Allow the text to wrap */
+    text-align: center; /* Center-align the text */
+    overflow: hidden; /* Prevent text from spilling out */
+}
+
+.sign-up-button:hover {
+    background-color: #333333;
+}
+
+/* Separator Lines */
+header::before,
+header::after {
+    content: '';
+    position: absolute;
+    background-color: #000000;
+    height: 1px;
+    width: calc(100% - 4vw); /* Adjust width relative to viewport width */
+    left: 2vw; /* Adjust left position relative to viewport width */
+}
+
+/* Separator Line at the top */
+header::before {
+    top: 0;
+}
+
+/* Separator Line at the bottom */
+header::after {
+    bottom: 0;
+}
+
+/* Get Started Button Styles */
+.get-started-button {
+    position: absolute;
+    width: 119px;
+    height: 54.4px;
+    left: calc(50% - 134px); /* Adjust left position to center and add space */
+    top: calc(32vh + 10px); /* Adjust top position to align with the subtitle and add space */
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+
+.get-started-button:hover {
+    background-color: #333333;
+}
+
+/* Learn More Button Styles */
+.learn-more-button {
+    position: absolute;
+    width: 119px;
+    height: 54.4px;
+    left: calc(50% + 15px); /* Adjust left position to add space */
+    top: calc(32vh + 10px); /* Adjust top position to align with the subtitle and add space */
+    background-color: #ffffff;
+    color: #000000;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: 2px solid #000000; /* Add black border */
+    border-radius: 5px;
+}
+
+.learn-more-button:hover {
+    background-color: #f0f0f0; /* Change background color on hover */
+}
+
+/* Dining Hall Image Styles */
+.dining-hall-image {
+    position: absolute;
+    width: 343px; /* Adjust width as needed */
+    height: 343px; /* Adjust height as needed */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%);
+    top: calc(33vh + 100px); /* Adjust top position relative to the buttons */
+    background: url('file:///Users/zionm/Desktop/Screen%20Shot%202024-03-30%20at%202.37.36%20AM.png');
+    background-size: cover; /* Ensure the image covers the container */
+}
+
+.blog {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the columns horizontally */
+    align-items: flex-start; /* Align columns to the start vertically */
+}
+
+.blog-column {
+    width: 50%; /* Two columns by default */
+    padding: 20px;
+}
+
+/* Styles for paragraphs */
+p {
+    margin-top: 170px; /* Adjust the top margin */
+    margin-bottom: 10px; /* Adjust the bottom margin */
+    margin-left: 30px; /* Adjust the left margin */
+    margin-right: 30px; /* Adjust the right margin */
+
+    padding-top: 10px; /* Adjust the top padding */
+    padding-bottom: 10px; /* Adjust the bottom padding */
+    padding-left: 20px; /* Adjust the left padding */
+    padding-right: 20px; /* Adjust the right padding */
+
+    position: relative; /* or absolute, fixed */
+    top: 50px; /* Adjust the top position */
+    left: 20px; /* Adjust the left position */
+
+    float: left; /* or right */
+
+    display: inline; /* or block, inline-block, etc. */
+
+    text-align: center; /* or left, right, justify */
+}
+
+
+/* Media Query for Phones */
+@media only screen and (max-width: 600px) {
+    .blog-column {
+        width: 100%; /* One column on smaller screens */
+    }
+}
