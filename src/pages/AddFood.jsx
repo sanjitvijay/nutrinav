@@ -97,7 +97,7 @@ function AddFood() {
         setDiningHall(option)
     }
     return (
-        <div>
+        <div className="pb-5">
             <div className="flex justify-center">
                 <CustomDropdown 
                     options={['Bursley', 'East Quad', 'Markley', 'Mosher-Jordan', 'North Quad', 'South Quad', 'Twigs at Oxford']} 

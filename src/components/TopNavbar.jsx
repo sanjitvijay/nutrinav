@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Logo from '../assets/Logo.png';
-
+import Logo2 from '../assets/Logo2.svg';
 
 function TopNavbar() {
   const navigate = useNavigate()
@@ -21,7 +21,7 @@ function TopNavbar() {
       </div>
       <div className="navbar-center">
         <button className="btn btn-ghost">
-          <img src={Logo} alt="Logo" onClick={()=>navigate('/dashboard')}/>
+          <img src={Logo2} alt="Logo" onClick={()=>navigate('/dashboard')}/>
         </button>
       </div>
       <div className="navbar-end">
