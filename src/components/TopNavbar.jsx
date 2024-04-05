@@ -1,9 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import Logo from '../assets/Logo.png';
 
 
 function TopNavbar() {
+  const navigate = useNavigate()
+
   return (
-    <div className="navbar bg-base-100 border-b-2">   
+    <div className="navbar bg-base-100 border-b-2 fixed z-10">   
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -17,9 +20,9 @@ function TopNavbar() {
         </div>
       </div>
       <div className="navbar-center">
-        <a className="btn btn-ghost text-xl">
-          <img src={Logo} alt="Logo"/>
-        </a>
+        <button className="btn btn-ghost">
+          <img src={Logo} alt="Logo" onClick={()=>navigate('/dashboard')}/>
+        </button>
       </div>
       <div className="navbar-end">
         <button className="btn btn-ghost btn-circle">

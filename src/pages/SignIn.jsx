@@ -58,7 +58,7 @@ function SignIn() {
 
                 <label className="mb-2">Password:</label>
                 <input 
-                    type="text" 
+                    type="password" 
                     id="password" 
                     value={password}
                     className="input input-sm border-black border-1 mb-3"

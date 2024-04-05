@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <TopNavbar />
-      <div className="p-5">
+      <div className="p-5 pt-20 pb-16">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign-in" element={<SignIn />} />
