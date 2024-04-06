@@ -111,7 +111,7 @@ function AddFood() {
                     <ToggleIcon toggle={showBreakfast}/>
                 </button>
                 <div className="divider -mt-1"></div> 
-                {showBreakfast && <MenuDisplay menu={breakfast}/>}
+                {showBreakfast && <MenuDisplay menu={breakfast} time={'breakfast'}/>}
             </div>
 
             <div>
@@ -121,7 +121,7 @@ function AddFood() {
                     
                 </button>
                 <div className="divider -mt-1"></div> 
-                {showLunch && <MenuDisplay menu={lunch}/>}
+                {showLunch && <MenuDisplay menu={lunch} time={'lunch'}/>}
             </div>
 
             <div>
@@ -130,7 +130,7 @@ function AddFood() {
                     <ToggleIcon toggle={showDinner}/>
                 </button>
                 <div className="divider -mt-1"></div> 
-                {showDinner && <MenuDisplay menu={dinner}/>}
+                {showDinner && <MenuDisplay menu={dinner} time={'dinner'}/>}
             </div>
         </div>
     );

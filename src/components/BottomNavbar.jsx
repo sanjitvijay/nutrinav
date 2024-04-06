@@ -19,13 +19,13 @@ function BottomNavbar() {
 
     return (
         
-        (isActive('/dashboard') || isActive('/add-food')) && (
+        (isActive('/dashboard') || isActive('/add-food') || isActive('/log')) && (
         <div className="btm-nav border-t-2">
             <button
-                onClick={()=>navigate('/')}
+                onClick={()=>navigate('/log')}
             >
-                <GrCatalog size={28} color={isActive('/') ? 'oklch(var(--s))' : 'oklch(var(--p))'}/>
-                <span className={`btm-nav-label ${isActive('/') ? 'text-secondary' : 'text-primary'}`}>Log</span>
+                <GrCatalog size={28} color={isActive('/log') ? 'oklch(var(--s))' : 'oklch(var(--p))'}/>
+                <span className={`btm-nav-label ${isActive('/log') ? 'text-secondary' : 'text-primary'}`}>Log</span>
             </button>
             <button
                 onClick={()=>navigate('/dashboard')}

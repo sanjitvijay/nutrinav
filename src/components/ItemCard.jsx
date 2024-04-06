@@ -2,7 +2,7 @@ import supabaseClient from "../supabaseClient";
 import { IoMdAddCircle } from "react-icons/io";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { useState } from "react";
-function ItemCard({item}) {
+function ItemCard({item, time}) {
     const supabase = supabaseClient()
 
     const {name, nutrition_facts} = item 
@@ -17,7 +17,7 @@ function ItemCard({item}) {
         if(userId !== null){
             const {data, error} = await supabase
             .from('users')
-            .select('nutrition')
+            .select('nutrition, log')
             .eq('id', userId)
 
             if(error){
@@ -35,11 +35,20 @@ function ItemCard({item}) {
                     console.log(error);
                 }
             }
+            let prevLog = data[0].log
+            const logItem = {nutrition_facts, name, time}
+            prevLog.push(logItem)
+            
+            try{
+                await supabase
+                .from('users')
+                .upsert([{ id: userId, log: prevLog }]);
+            } catch (error) {
+                console.log(error)
+            }
         }
         setAddLoading(false)
     }
-
-
     
     return (
         <div className="flex justify-between bg-white hover:shadow-md rounded-lg p-2 items-center border-2 cursor-pointer">
