@@ -54,7 +54,7 @@ function SignUp() {
     return (
         <div className="flex justify-center items-center">
         <div className="card px-10 py-5 border-2 shadow-md">
-            <h1 className="text-3xl font-bold text-primary mb-5 text-center">Sign In</h1>
+            <h1 className="text-3xl font-bold text-primary mb-5 text-center">Sign Up</h1>
             <form onSubmit={onSubmit}>
                 <div className="form-control mb-5">
                     <label className="input input-bordered flex items-center gap-2">
@@ -116,7 +116,7 @@ function SignUp() {
             <div className="flex justify-center mt-5">
                 <button 
                     className="btn btn-ghost btn-sm"
-                    onClick={()=>navigate('/sign-ip')}
+                    onClick={()=>navigate('/sign-up')}
                 >
                     Sign In
                 </button>  
