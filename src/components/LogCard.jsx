@@ -1,9 +1,6 @@
 import { CiTrash } from "react-icons/ci";
 import { MdOutlineEdit } from "react-icons/md";
-import supabaseClient from "../supabaseClient";
 function LogCard({log, onDelete}) {
-    const supabase = supabaseClient()
-
     const {name, nutrition_facts} = log 
     const {calories, total_fat, total_carbohydrate, protein} = nutrition_facts
     
@@ -12,17 +9,17 @@ function LogCard({log, onDelete}) {
             <div className="w-full">
                 <div className="flex justify-between">
                     <h2 className="font-bold text-primary mb-2">{name}</h2>
-                    <div className="mb-1 flex justify-between">
+                    <div className="mb-2 flex justify">
                         <button 
-                            className="mr-5"
+                            className="mr-2"
                             onClick={()=>onDelete(log)}
                         >
                             <CiTrash size={25} color="red" />
                         </button>
 
-                        <button>
+                        {/* <button>
                             <MdOutlineEdit size={25} />
-                        </button>
+                        </button> */}
                     </div>
                 </div>
                 <div className="flex justify-between">
@@ -64,16 +61,6 @@ function LogCard({log, onDelete}) {
                     </div>
                 </div>
             </div>
-
-            {/* <div>
-                <button className="mb-5">
-                    <CiTrash size={30} color="red"/>
-                </button>
-
-                <button>
-                    <MdEdit size={30}/>
-                </button>
-            </div> */}
         </div>
     );
 }

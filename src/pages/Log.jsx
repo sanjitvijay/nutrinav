@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import supabaseClient from "../supabaseClient";
 import LogDisplay from "../components/LogDisplay";
-import { set } from "date-fns";
 
 function Log() {
     const supabase = supabaseClient();
     const [logs,setLogs] = useState([]);
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const fetchLog = async () => {
@@ -22,6 +22,9 @@ function Log() {
         }
 
         fetchLog()
+        setTimeout(() => {
+            setLoading(false)
+        }, 1000); // 2 second delay
     }, [supabase])
 
     const onDelete = async(log)=>{
@@ -54,22 +57,25 @@ function Log() {
         }
     }
 
-    return (
-        <div className="mb-5">
-            <h1 className="text-primary font-bold text-3xl">Breakfast</h1>
-            <div className="divider -mt-1"></div>
-            <LogDisplay logs={logs} time="breakfast" onDelete={onDelete}/>
-
-            <h1 className="text-primary font-bold text-3xl mt-3">Lunch</h1>
-            <div className="divider -mt-1"></div>
-            <LogDisplay logs={logs} time="lunch" onDelete={onDelete}/>
-
-            <h1 className="text-primary font-bold text-3xl mt-3">Dinner</h1>
-            <div className="divider -mt-1"></div>
-            <LogDisplay logs={logs} time="dinner" onDelete={onDelete}/> 
-
-        </div>
-    );
+    if(loading) {
+        return (
+            <div className="flex justify-center">
+                <span className="loading loading-spinner loading-lg text-secondary"></span>
+            </div>
+        )
+    }
+    else{
+        return (
+            logs.length === 0 ? <h1 className="text-primary text-center font-bold text-3xl">Nothing to show</h1> :
+            <div className="mb-5">
+                <LogDisplay logs={logs} time="breakfast" onDelete={onDelete}/>
+                <LogDisplay logs={logs} time="brunch" onDelete={onDelete}/>
+                <LogDisplay logs={logs} time="lunch" onDelete={onDelete}/>
+                <LogDisplay logs={logs} time="dinner" onDelete={onDelete}/> 
+            </div>
+        );
+    }
+    
 }
 
 export default Log;

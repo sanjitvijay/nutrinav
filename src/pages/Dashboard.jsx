@@ -1,19 +1,21 @@
 import supabaseClient from "../supabaseClient";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {format} from 'date-fns'
+import {format, set} from 'date-fns'
+import { useAuth } from "../context/AuthProvider";
 function Dashboard() {
     const supabase = supabaseClient()
     const navigate = useNavigate()
 
     const [userData, setUserData]= useState({})
     const {calories, total_fat, total_carbohydrate, protein} = userData
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     
     const [day, setDay] = useState('')
     const [date, setDate] = useState('')
 
+    const [userName, setUserName] = useState('')
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -21,14 +23,15 @@ function Dashboard() {
             const { data: { user } } = await supabase.auth.getUser()
             const { data, error } = await supabase
                 .from('users')
-                .select('nutrition')
+                .select('*')
                 .eq('id', user.id)
             if (error) {
                 console.log('Error:', error)
             } else {
                 setUserData(data[0].nutrition)
+                setUserName(data[0].username.toUpperCase())
             }
-            setLoading(false)
+            setTimeout(() => {setLoading(false)}, 500)
         }
 
         
@@ -43,18 +46,20 @@ function Dashboard() {
     return (
         <div>
             <div className="flex justify-between items-center mb-5">
-            <div className="avatar placeholder ">
-            <div className="bg-base-200 rounded-full w-24 border-2 border-primary shadow-lg">
-                <span className="text-3xl font-bold text-secondary">SV</span>
-            </div>
-            </div> 
-                <div className="prose">
+            {loading ? (<div className="skeleton h-24 w-24 rounded-full"/>) :
+                <div className="avatar placeholder ">
+                    <div className="bg-base-200 rounded-full w-24 border-2 border-primary shadow-lg items-center flex justify-center">
+                        <span className="text-5xl font-bold text-secondary">{userName[0]}</span>
+                    </div>
+                </div> 
+            }
+            <div className="prose">
                     <h1 className="text-secondary text-4xl text-right"> {day}, <br/> {date} </h1>
                 </div>
             </div>
 
 
-            <div className="card border-2 p-3 mb-5 shadow-lg">
+            <div className="card border-2 p-2 mb-5 shadow-lg">
                 {loading ? (<div className="skeleton h-48 w-full"></div>) : 
                 (   
                     <>
@@ -81,7 +86,7 @@ function Dashboard() {
                 
             </div>
 
-            <div className="card p-3 border-2 mb-5 shadow-lg">
+            <div className="card p-2 border-2 mb-5 shadow-lg">
                 {loading ? (<div className="skeleton h-32 w-full"></div>) : (
                     <>
                     <h2 className="text-3xl font-bold mb-2 text-primary">Macros</h2>
@@ -126,17 +131,6 @@ function Dashboard() {
                 )}
                 
             </div>
-
-            {/* <div className="flex justify-center">
-                <button 
-                    className="btn btn-secondary text-white"
-                    onClick={()=>navigate('/add-food')}
-                >
-                    Add Food
-                </button>
-            </div> */}
-
-
         </div>
     );
 }

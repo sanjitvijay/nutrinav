@@ -8,11 +8,8 @@ import ToggleIcon from "../components/ToggleIcon";
 
 function AddFood() {
     const supabase = supabaseClient()
-    const navigate = useNavigate()
 
-    const [caloriesRemaining, setCaloriesRemaining] = useState(null)
 
-    const [menu, setMenu] = useState([])
     const [diningHall, setDiningHall] = useState('Bursley')
 
     const [breakfast, setBreakfast] = useState([])
@@ -24,6 +21,7 @@ function AddFood() {
     const [showBrunch, setShowBrunch] = useState(false)
     const [showLunch, setShowLunch] = useState(false)
     const [showDinner, setShowDinner] = useState(false)
+
     const MealTimes = {
         BREAKFAST: 'is_breakfast',
         BRUNCH: 'is_brunch',
@@ -32,20 +30,6 @@ function AddFood() {
     }
 
     useEffect(()=>{
-        const fetchCalories = async () => {
-            const { data: { user } } = await supabase.auth.getUser()
-            const { data, error } = await supabase
-                .from('users')
-                .select('calories')
-                .eq('id', user.id)
-            if (error) {
-                console.log('Error:', error)
-            } else {
-                setCaloriesRemaining(2000 - data[0].calories)
-            }
-        }
-
-        fetchCalories()
         fetchMenu(MealTimes.BREAKFAST)
         fetchMenu(MealTimes.BRUNCH)
         fetchMenu(MealTimes.LUNCH)
@@ -89,7 +73,6 @@ function AddFood() {
                 default: 
                     setDinner(data)
             }
-            setMenu(data)
         }
     }
 
@@ -105,33 +88,50 @@ function AddFood() {
                 />
             </div>
             
-            <div>
-                <button className="flex items-center mt-5" onClick={() => setShowBreakfast(!showBreakfast)}>
-                    <h1 className="text-primary font-bold text-3xl">Breakfast</h1>
-                    <ToggleIcon toggle={showBreakfast}/>
-                </button>
-                <div className="divider -mt-1"></div> 
-                {showBreakfast && <MenuDisplay menu={breakfast} time={'breakfast'}/>}
-            </div>
+            {breakfast.length !== 0 && 
+                <div>
+                    <button className="flex items-center mt-5" onClick={() => setShowBreakfast(!showBreakfast)}>
+                        <h1 className="text-primary font-bold text-3xl">Breakfast</h1>
+                        <ToggleIcon toggle={showBreakfast}/>
+                    </button>
+                    <div className="divider -mt-1"></div> 
+                    {showBreakfast && <MenuDisplay menu={breakfast} time={'breakfast'}/>}
+                </div>
+            }
 
-            <div>
-                <button className="flex items-center mt-5" onClick={() => setShowLunch(!showLunch)}>
-                    <h1 className="text-primary font-bold text-3xl">Lunch</h1>
-                    <ToggleIcon toggle={showLunch}/>
-                    
-                </button>
-                <div className="divider -mt-1"></div> 
-                {showLunch && <MenuDisplay menu={lunch} time={'lunch'}/>}
-            </div>
+            {brunch.length !== 0 && 
+                <div>
+                    <button className="flex items-center mt-5" onClick={() => setShowBrunch(!showBrunch)}>
+                        <h1 className="text-primary font-bold text-3xl">Brunch</h1>
+                        <ToggleIcon toggle={showBrunch}/>
+                    </button>
+                    <div className="divider -mt-1"></div> 
+                    {showBrunch && <MenuDisplay menu={brunch} time={'brunch'}/>}
+                </div>
+            }
 
-            <div>
-                <button className="flex items-center mt-5" onClick={() => setShowDinner(!showDinner)}>
-                    <h1 className="text-primary font-bold text-3xl">Dinner</h1>   
-                    <ToggleIcon toggle={showDinner}/>
-                </button>
-                <div className="divider -mt-1"></div> 
-                {showDinner && <MenuDisplay menu={dinner} time={'dinner'}/>}
-            </div>
+            {lunch.length !== 0 && 
+                <div>
+                    <button className="flex items-center mt-5" onClick={() => setShowLunch(!showLunch)}>
+                        <h1 className="text-primary font-bold text-3xl">Lunch</h1>
+                        <ToggleIcon toggle={showLunch}/>
+                        
+                    </button>
+                    <div className="divider -mt-1"></div> 
+                    {showLunch && <MenuDisplay menu={lunch} time={'lunch'}/>}
+                </div>
+            }
+
+            {dinner.length !== 0 && 
+                <div>
+                    <button className="flex items-center mt-5" onClick={() => setShowDinner(!showDinner)}>
+                        <h1 className="text-primary font-bold text-3xl">Dinner</h1>   
+                        <ToggleIcon toggle={showDinner}/>
+                    </button>
+                    <div className="divider -mt-1"></div> 
+                    {showDinner && <MenuDisplay menu={dinner} time={'dinner'}/>}
+                </div>
+            }
         </div>
     );
 }
