@@ -116,7 +116,7 @@ function SignUp() {
             <div className="flex justify-center mt-5">
                 <button 
                     className="btn btn-ghost btn-sm"
-                    onClick={()=>navigate('/sign-up')}
+                    onClick={()=>navigate('/sign-in')}
                 >
                     Sign In
                 </button>  
