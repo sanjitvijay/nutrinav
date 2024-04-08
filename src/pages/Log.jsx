@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import supabaseClient from "../supabaseClient";
 import LogDisplay from "../components/LogDisplay";
+import toast from "react-hot-toast";
 
 function Log() {
     const supabase = supabaseClient();
     const [logs,setLogs] = useState([]);
     const [loading, setLoading] = useState(true)
+    const [deleteLoading, setDeleteLoading] = useState(false)
 
     useEffect(() => {
         const fetchLog = async () => {
@@ -28,6 +30,9 @@ function Log() {
     }, [supabase])
 
     const onDelete = async(log)=>{
+        if(deleteLoading) return
+        
+        setDeleteLoading(true)
         const { data: { user } } = await supabase.auth.getUser()
 
         const newLogs = logs.filter((item) => item.name !== log.name)
@@ -37,7 +42,7 @@ function Log() {
             .from('users')
             .upsert([{ id: user.id, log: newLogs }]);
         if (error) {
-            console.log(error);
+            toast.error('Error deleting log')
         }
 
         const { data } = await supabase
@@ -53,8 +58,9 @@ function Log() {
             .from('users')
             .upsert([{ id: user.id, nutrition: prev }]);
         if (error2) {
-            console.log(error2);
+            toast.error('Error deleting log')
         }
+        setDeleteLoading(false)
     }
 
     if(loading) {

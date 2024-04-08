@@ -1,5 +1,5 @@
 import { CiTrash } from "react-icons/ci";
-import { MdOutlineEdit } from "react-icons/md";
+
 function LogCard({log, onDelete}) {
     const {name, nutrition_facts} = log 
     const {calories, total_fat, total_carbohydrate, protein} = nutrition_facts
