@@ -8,7 +8,6 @@ import toast from 'react-hot-toast';
 function UserInfo() {
     const navigate = useNavigate();
     const supabase = supabaseClient();
-    const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
         dailyCalories: 2000,
         dailyProtein: 50,
@@ -43,7 +42,47 @@ function UserInfo() {
 
     const onSubmit = async (e) => {
         e.preventDefault(); 
-        setLoading(true)
+        if(dailyCalories < 1000){
+            toast.error("Daily Calories must be greater than 1000 Cals")
+            return
+        }
+
+        if(dailyCalories > 9999){
+            toast.error("Daily Calories must be less than 9999 Cals")
+            return
+        }
+
+        if(dailyFat < 10){
+            toast.error("Daily Fat must be greater than 10g")
+            return
+        }
+
+        if(dailyFat > 999){
+            toast.error("Daily Fat must be less than 999g")
+            return
+        }
+
+        if(dailyCarbs < 100){
+            toast.error("Daily Carbs must be greater than 100g")
+            return 
+        }
+
+        if(dailyCarbs > 999){
+            toast.error("Daily Carbs must be less than 999g")
+            return 
+        }
+
+        if(dailyProtein < 10){
+            toast.error("Daily Protein must be greater than 10g")
+            return
+        }
+
+        if(dailyProtein > 999){
+            toast.error("Daily Protein must be less than 999g")
+            return
+        }
+
+
         const { data: { user } } = await supabase.auth.getUser()
         const { error } = await supabase
             .from('users')
@@ -55,7 +94,6 @@ function UserInfo() {
             toast.success('User info updated successfully');
             setTimeout(() => {navigate('/dashboard');}, 2000)
         }
-        setLoading(false)
         
     }
 
