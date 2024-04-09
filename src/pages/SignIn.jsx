@@ -9,7 +9,6 @@ import toast from 'react-hot-toast';
 
 function SignIn() {
     const navigate = useNavigate();
-    const supabase = supabaseClient();
     const {login, forgotPassword} = useAuth();
 
     const [formData, setFormData] = useState({

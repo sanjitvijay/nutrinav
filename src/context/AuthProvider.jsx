@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import supabaseClient from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
-import { set } from "date-fns";
 
 const supabase = supabaseClient();
 const AuthContext = createContext({});

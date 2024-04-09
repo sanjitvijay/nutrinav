@@ -2,11 +2,15 @@ import supabaseClient from "../supabaseClient";
 import { IoMdAddCircle } from "react-icons/io";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { useState } from "react";
+import { useUserInfo } from "../context/UserInfoProvider";
 function ItemCard({item, time}) {
     const supabase = supabaseClient()
 
     const {name, nutrition_facts} = item 
     const {calories, total_fat, total_carbohydrate, protein} = nutrition_facts
+
+    const { userInfo } = useUserInfo();
+    const {dailyFat, dailyCarbs, dailyProtein, dailyCalories} = userInfo
 
     const [addLoading, setAddLoading] = useState(false)
 
@@ -78,7 +82,7 @@ function ItemCard({item, time}) {
 
                 <div className="flex justify-between">
                     <div>
-                        <div className="radial-progress text-primary text-center" style={{"--value":((calories)/2000) * 100, "--size" : "3rem", "--thickness" : "4px", boxShadow: 'inset 0 0 0 4px #e5e7eb'}} 
+                        <div className="radial-progress text-primary text-center" style={{"--value":((calories)/dailyCalories) * 100, "--size" : "3rem", "--thickness" : "4px", boxShadow: 'inset 0 0 0 4px #e5e7eb'}} 
                             role="progressbar">
                             <div>
                                 <span className="text-lg text-secondary font-bold">{calories}</span>
@@ -87,7 +91,7 @@ function ItemCard({item, time}) {
                         <p className="text-center text-base-400 text-xs">Calories</p>
                     </div>
                     <div>
-                        <div className="radial-progress text-primary text-center " style={{"--value": (total_carbohydrate/275) * 100, "--size" : "3rem", "--thickness" : "4px", boxShadow: 'inset 0 0 0 4px #e5e7eb'}} 
+                        <div className="radial-progress text-primary text-center " style={{"--value": (total_carbohydrate/dailyCarbs) * 100, "--size" : "3rem", "--thickness" : "4px", boxShadow: 'inset 0 0 0 4px #e5e7eb'}} 
                             role="progressbar">
                             <div>
                                 <span className="text-lg text-secondary font-bold">{total_carbohydrate}g</span>
@@ -96,7 +100,7 @@ function ItemCard({item, time}) {
                         <p className="text-center text-base-400 text-xs">Carbs</p>
                     </div>
                     <div>
-                        <div className="radial-progress text-primary text-center " style={{"--value": (total_carbohydrate/275) * 100, "--size" : "3rem", "--thickness" : "4px", boxShadow: 'inset 0 0 0 4px #e5e7eb'}} 
+                        <div className="radial-progress text-primary text-center " style={{"--value": (total_fat/dailyFat) * 100, "--size" : "3rem", "--thickness" : "4px", boxShadow: 'inset 0 0 0 4px #e5e7eb'}} 
                             role="progressbar">
                             <div>
                                 <span className="text-lg text-secondary font-bold">{total_fat}g</span>
@@ -105,7 +109,7 @@ function ItemCard({item, time}) {
                         <p className="text-center text-base-400 text-xs">Fats</p>
                     </div>
                     <div className="mr-8">
-                        <div className="radial-progress text-primary text-center " style={{"--value":(protein/50) * 100, "--size" : "3rem", "--thickness" : "4px", boxShadow: 'inset 0 0 0 4px #e5e7eb'}} 
+                        <div className="radial-progress text-primary text-center " style={{"--value":(protein/dailyProtein) * 100, "--size" : "3rem", "--thickness" : "4px", boxShadow: 'inset 0 0 0 4px #e5e7eb'}} 
                             role="progressbar">
                             <div>
                                 <span className="text-lg text-secondary font-bold">{protein}g</span>

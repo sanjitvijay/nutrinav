@@ -1,21 +1,23 @@
 import supabaseClient from "../supabaseClient";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {format, set} from 'date-fns'
-import { useAuth } from "../context/AuthProvider";
+import {format} from 'date-fns'
+import { useUserInfo } from "../context/UserInfoProvider";
 function Dashboard() {
     const supabase = supabaseClient()
     const navigate = useNavigate()
 
     const [userData, setUserData]= useState({})
     const {calories, total_fat, total_carbohydrate, protein} = userData
+    const [dailyValues, setDailyValues] = useState({})
     const [loading, setLoading] = useState(true)
-
+    const {dailyFat, dailyCarbs, dailyProtein, dailyCalories} = dailyValues
     
     const [day, setDay] = useState('')
     const [date, setDate] = useState('')
 
     const [userName, setUserName] = useState('')
+
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -30,6 +32,7 @@ function Dashboard() {
             } else {
                 setUserData(data[0].nutrition)
                 setUserName(data[0].username.toUpperCase())
+                setDailyValues(data[0].dailyValues)
             }
             setTimeout(() => {setLoading(false)}, 500)
         }
@@ -65,10 +68,10 @@ function Dashboard() {
                     <>
                         <h2 className="text-3xl font-bold mb-2 text-primary">Calories</h2>
                         <div className="flex justify-between items-center">
-                            <div className="radial-progress text-primary text-center" style={{"--value":((2000-calories)/2000) * 100, "--size" : "8rem", "--thickness" : "12px", boxShadow: 'inset 0 0 0 12px #e5e7eb'}} 
+                            <div className="radial-progress text-primary text-center" style={{"--value":((dailyCalories-calories)/dailyCalories) * 100, "--size" : "8rem", "--thickness" : "12px", boxShadow: 'inset 0 0 0 12px #e5e7eb'}} 
                                 role="progressbar">
                                 <div>
-                                    <span className="text-lg text-secondary font-bold">{2000-calories}</span><br/>
+                                    <span className="text-lg text-secondary font-bold">{dailyCalories-calories}</span><br/>
                                     <span className="text-xs ">remaining</span>
                                 </div>
                                 
@@ -76,7 +79,7 @@ function Dashboard() {
         
                             <div className="mr-5">
                                 <h2 className="text-2xl font-bold mb-2 text-primary">Goal:</h2>
-                                <p className="text-xl font-bold text-left text-secondary">{2000} Cals</p>
+                                <p className="text-xl font-bold text-left text-secondary">{dailyCalories} Cals</p>
                                 <h2 className="text-2xl font-bold mb-2 text-primary">Food:</h2>
                                 <p className="text-xl font-bold text-left text-secondary">{calories} Cals</p>
                             </div>
@@ -92,44 +95,48 @@ function Dashboard() {
                     <h2 className="text-3xl font-bold mb-2 text-primary">Macros</h2>
                     <div className="flex justify-between items-center">
                         <div className="flex flex-col justify-center">
-                            <div className="radial-progress text-primary text-center" style={{"--value": (total_carbohydrate/275) * 100,"--size" : "6rem", "--thickness" : "8px", boxShadow: 'inset 0 0 0 8px #e5e7eb'}} 
+                            <div className="radial-progress text-primary text-center" style={{"--value": (total_carbohydrate/dailyCarbs) * 100,"--size" : "6rem", "--thickness" : "8px", boxShadow: 'inset 0 0 0 8px #e5e7eb'}} 
                                 role="progressbar">
                                 <div>
                                     <span className="text-lg text-secondary font-bold">{total_carbohydrate}g</span><br/>
                                     <span className="text-xs ">Carbs</span>
                                 </div>
                             </div>
-                            <p className="text-center text-base-400 text-xs mt-2">275g total</p>
+                            <p className="text-center text-base-400 text-xs mt-2">{dailyCarbs}g total</p>
                         </div>
                         
     
                         <div>
-                            <div className="radial-progress text-primary text-center border-2" style={{"--value":(total_fat/78) * 100, "--size" : "6rem", "--thickness" : "8px", boxShadow: 'inset 0 0 0 8px #e5e7eb'}} 
+                            <div className="radial-progress text-primary text-center border-2" style={{"--value":(total_fat/dailyCarbs) * 100, "--size" : "6rem", "--thickness" : "8px", boxShadow: 'inset 0 0 0 8px #e5e7eb'}} 
                                 role="progressbar">
                                 <div>
                                     <span className="text-lg text-secondary font-bold">{total_fat}g</span><br/>
                                     <span className="text-xs ">Fat</span>
                                 </div>
                             </div>
-                            <p className="text-center text-base-400 text-xs mt-2">78g total</p>
+                            <p className="text-center text-base-400 text-xs mt-2">{dailyFat}g total</p>
                         </div>
                         
     
                         <div>
-                            <div className="radial-progress text-primary text-center " style={{"--value":(protein/50) * 100, "--size" : "6rem", "--thickness" : "8px", boxShadow: 'inset 0 0 0 8px #e5e7eb'}} 
+                            <div className="radial-progress text-primary text-center " style={{"--value":(protein/dailyProtein) * 100, "--size" : "6rem", "--thickness" : "8px", boxShadow: 'inset 0 0 0 8px #e5e7eb'}} 
                                 role="progressbar">
                                 <div>
                                     <span className="text-lg text-secondary font-bold">{protein}g</span><br/>
                                     <span className="text-xs ">Protein</span>
                                 </div>
                             </div>
-                            <p className="text-center text-base-400 text-xs mt-2">50g total</p>
+                            <p className="text-center text-base-400 text-xs mt-2">{dailyProtein}g total</p>
                         </div>
                         
                     </div>
                     </>
-                )}
-                
+                )}                
+            </div>
+
+            <div className="flex justify-center">
+                <button className="btn btn-primary flex mt-5 text-white" onClick={() => navigate('/user-info')}>Update Nutrition Goals</button>
+
             </div>
         </div>
     );

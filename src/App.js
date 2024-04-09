@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import BottomNavbar from './components/BottomNavbar';
 import Log from './pages/Log';
 import ForgotPassword from './pages/ForgotPassword';
+import UserInfo from './pages/UserInfo';
 import {Toaster} from 'react-hot-toast';
 import AuthRoute from './components/AuthRoute';
 
@@ -31,7 +32,10 @@ function App() {
           <Route path="/log" element={<AuthRoute />}>
             <Route path="/log" element={<Log />} />
           </Route>
-          
+          <Route path="/user-info" element={<UserInfo />} />
+          <Route path="/user-info" element={<AuthRoute />}>
+            
+          </Route>
         </Routes>
       </div>
       <BottomNavbar/>
