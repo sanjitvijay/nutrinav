@@ -36,8 +36,28 @@ function ItemCard({item, time}) {
                 }
             }
             let prevLog = data[0].log
-            const logItem = {nutrition_facts, name, time}
-            prevLog.push(logItem)
+            let changed = false
+
+            prevLog = prevLog.map(logItem => {
+            if (logItem.name === name) {
+                // Double the nutrition values of the matching logItem
+                changed = true
+                const changedNutritionFacts = Object.fromEntries(
+                    Object.entries(logItem.nutrition_facts).map(([key, value]) => [key, String(Number(value) + Number(nutrition_facts[key]))])
+                );
+                const updatedServings = logItem.servings + 1;
+                return { ...logItem, nutrition_facts: changedNutritionFacts, servings: updatedServings};
+            } else {
+                // Return the logItem unchanged
+                return logItem;
+            }
+            });
+
+            if(!changed){
+                const servings = 1
+                const logItem = {nutrition_facts, name, time , servings}
+                prevLog.push(logItem)
+            }
             
             try{
                 await supabase

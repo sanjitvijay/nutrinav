@@ -1,14 +1,17 @@
 import { CiTrash } from "react-icons/ci";
 
 function LogCard({log, onDelete}) {
-    const {name, nutrition_facts} = log 
+    const {name, nutrition_facts, servings} = log 
     const {calories, total_fat, total_carbohydrate, protein} = nutrition_facts
     
     return (
         <div className="flex justify-between bg-white hover:shadow-md rounded-lg p-2 items-center border-2 cursor-pointer">
             <div className="w-full">
                 <div className="flex justify-between">
-                    <h2 className="font-bold text-primary mb-2">{name}</h2>
+                    <div>
+                        <h2 className="font-bold text-primary">{name}</h2>
+                        <p className="mb-2">Servings: {servings}</p>
+                    </div>
                     <div className="mb-2 flex justify">
                         <button 
                             className="mr-2"
