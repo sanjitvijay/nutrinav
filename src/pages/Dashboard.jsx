@@ -2,7 +2,7 @@ import supabaseClient from "../supabaseClient";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {format} from 'date-fns'
-import { useUserInfo } from "../context/UserInfoProvider";
+import { useAuth } from "../context/AuthProvider";
 function Dashboard() {
     const supabase = supabaseClient()
     const navigate = useNavigate()
@@ -18,11 +18,11 @@ function Dashboard() {
 
     const [userName, setUserName] = useState('')
 
+    const {user} = useAuth()
 
     useEffect(() => {
         const fetchUserData = async () => {
             setLoading(true)
-            const { data: { user } } = await supabase.auth.getUser()
             const { data, error } = await supabase
                 .from('users')
                 .select('*')

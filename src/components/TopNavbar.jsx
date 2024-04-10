@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Logo from '../assets/Logo.png';
+import Nutrinavfull from '../assets/Nutrinavfull.svg'
 import { useAuth } from '../context/AuthProvider';
 import { FaRegCircleUser } from "react-icons/fa6";
 
@@ -19,13 +20,18 @@ function TopNavbar() {
         }
       </div>
       <div className="navbar-center">
-        <button className="btn btn-ghost ">
+        {/* <button className="btn btn-ghost ">
           <img src={Logo} alt="Logo" onClick={()=>navigate('/dashboard')}/>
+        </button> */}
+        <button
+          className='btn btn-ghost w-48'
+        >
+          <img src={Nutrinavfull}/>
         </button>
       </div>
       <div className="navbar-end">
         {user &&
-          <button 
+          <button
             className='btn btn-sm btn-primary text-white'
             onClick={logout}
           >
