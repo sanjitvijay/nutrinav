@@ -19,7 +19,7 @@ function BottomNavbar() {
 
     return (
         
-        (isActive('/dashboard') || isActive('/add-food') || isActive('/log')) && (
+        (isActive('/dashboard') || isActive('/add-food') || isActive('/log') || isActive('/profile')) && (
         <div className="btm-nav border-t-2">
             <button
                 onClick={()=>navigate('/log')}

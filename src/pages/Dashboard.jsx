@@ -133,11 +133,6 @@ function Dashboard() {
                     </>
                 )}                
             </div>
-
-            <div className="flex justify-center">
-                <button className="btn btn-primary flex mt-5 text-white" onClick={() => navigate('/user-info')}>Update Nutrition Goals</button>
-
-            </div>
         </div>
     );
 }

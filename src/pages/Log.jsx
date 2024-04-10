@@ -26,7 +26,7 @@ function Log() {
         fetchLog()
         setTimeout(() => {
             setLoading(false)
-        }, 1000); // 2 second delay
+        }, 1000); // 1 second delay
     }, [supabase])
 
     const onDelete = async(log)=>{

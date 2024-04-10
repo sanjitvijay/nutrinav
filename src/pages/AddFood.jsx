@@ -22,6 +22,8 @@ function AddFood() {
     const [showLunch, setShowLunch] = useState(false)
     const [showDinner, setShowDinner] = useState(false)
 
+    const [loading, setLoading] = useState(false)
+
     const MealTimes = {
         BREAKFAST: 'is_breakfast',
         BRUNCH: 'is_brunch',
@@ -37,6 +39,7 @@ function AddFood() {
     },[diningHall])
     
     const fetchMenu = async (mealTime) => {
+        setLoading(true)
         let mealCondition = ''
         switch(mealTime){
             case MealTimes.BREAKFAST: 
@@ -74,6 +77,9 @@ function AddFood() {
                     setDinner(data)
             }
         }
+        setTimeout(() => {
+            setLoading(false)
+        }, 500); 
     }
 
     const onChange = (option) => {
@@ -87,60 +93,67 @@ function AddFood() {
                     onChange={onChange}
                 />
             </div>
-            
-            {breakfast.length !== 0 && 
-                <div>
-                    <button className="flex items-center mt-5" onClick={() => setShowBreakfast(!showBreakfast)}>
-                        <h1 className="text-primary font-bold text-3xl">Breakfast</h1>
-                        <ToggleIcon toggle={showBreakfast}/>
-                    </button>
-                    <div className="divider -mt-1"></div> 
-                    {showBreakfast && <MenuDisplay menu={breakfast} time={'breakfast'}/>}
-                </div>
-            }
+            {loading ? 
+                <div className="flex justify-center mt-3">
+                    <span className="loading loading-spinner loading-lg text-secondary"></span>
+                </div> 
+                : 
+                <>
+                    {breakfast.length !== 0 && 
+                        <div>
+                            <button className="flex items-center mt-5" onClick={() => setShowBreakfast(!showBreakfast)}>
+                                <h1 className="text-primary font-bold text-3xl">Breakfast</h1>
+                                <ToggleIcon toggle={showBreakfast}/>
+                            </button>
+                            <div className="divider -mt-1"></div> 
+                            {showBreakfast && <MenuDisplay menu={breakfast} time={'breakfast'}/>}
+                        </div>
+                    }
 
-            {brunch.length !== 0 && 
-                <div>
-                    <button className="flex items-center mt-5" onClick={() => setShowBrunch(!showBrunch)}>
-                        <h1 className="text-primary font-bold text-3xl">Brunch</h1>
-                        <ToggleIcon toggle={showBrunch}/>
-                    </button>
-                    <div className="divider -mt-1"></div> 
-                    {showBrunch && <MenuDisplay menu={brunch} time={'brunch'}/>}
-                </div>
-            }
+                    {brunch.length !== 0 && 
+                        <div>
+                            <button className="flex items-center mt-5" onClick={() => setShowBrunch(!showBrunch)}>
+                                <h1 className="text-primary font-bold text-3xl">Brunch</h1>
+                                <ToggleIcon toggle={showBrunch}/>
+                            </button>
+                            <div className="divider -mt-1"></div> 
+                            {showBrunch && <MenuDisplay menu={brunch} time={'brunch'}/>}
+                        </div>
+                    }
 
-            {lunch.length !== 0 && 
-                <div>
-                    <button className="flex items-center mt-5" onClick={() => setShowLunch(!showLunch)}>
-                        <h1 className="text-primary font-bold text-3xl">Lunch</h1>
-                        <ToggleIcon toggle={showLunch}/>
-                        
-                    </button>
-                    <div className="divider -mt-1"></div> 
-                    {showLunch && <MenuDisplay menu={lunch} time={'lunch'}/>}
-                </div>
-            }
+                    {lunch.length !== 0 && 
+                        <div>
+                            <button className="flex items-center mt-5" onClick={() => setShowLunch(!showLunch)}>
+                                <h1 className="text-primary font-bold text-3xl">Lunch</h1>
+                                <ToggleIcon toggle={showLunch}/>
+                                
+                            </button>
+                            <div className="divider -mt-1"></div> 
+                            {showLunch && <MenuDisplay menu={lunch} time={'lunch'}/>}
+                        </div>
+                    }
 
-            {dinner.length !== 0 && 
-                <div>
-                    <button className="flex items-center mt-5" onClick={() => setShowDinner(!showDinner)}>
-                        <h1 className="text-primary font-bold text-3xl">Dinner</h1>   
-                        <ToggleIcon toggle={showDinner}/>
-                    </button>
-                    <div className="divider -mt-1"></div> 
-                    {showDinner && <MenuDisplay menu={dinner} time={'dinner'}/>}
-                </div>
-            }
+                    {dinner.length !== 0 && 
+                        <div>
+                            <button className="flex items-center mt-5" onClick={() => setShowDinner(!showDinner)}>
+                                <h1 className="text-primary font-bold text-3xl">Dinner</h1>   
+                                <ToggleIcon toggle={showDinner}/>
+                            </button>
+                            <div className="divider -mt-1"></div> 
+                            {showDinner && <MenuDisplay menu={dinner} time={'dinner'}/>}
+                        </div>
+                    }
 
-            <div className="flex justify-center">
-                <button 
-                    className="btn btn-primary text-white"
-                    onClick={() => navigate('/manual-entry')}
-                >
-                    Manual Entry
-                </button>
-            </div>
+                    <div className="flex justify-center">
+                        <button 
+                            className="btn btn-primary text-white"
+                            onClick={() => navigate('/manual-entry')}
+                        >
+                            Manual Entry
+                        </button>
+                    </div>
+                </>
+            }
         </div>
     );
 }
