@@ -34,7 +34,7 @@ function ReportBug() {
                 <div className="form-control mb-5">
                     <textarea 
                         className="textarea textarea-bordered" 
-                        placeholder="Enter a description of the bug (1000 characters or less)"
+                        placeholder="1000 characters or less"
                         value={form}
                         onChange={(e)=>setForm(e.target.value)}
                     />
