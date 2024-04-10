@@ -18,9 +18,8 @@ function BottomNavbar() {
     }
 
     return (
-        
-        (isActive('/dashboard') || isActive('/add-food') || isActive('/log') 
-        || isActive('/profile') || isActive('/user-info') || isActive('/manual-entry')) && (
+        //(!(isActive('/') && isActive('/forgot-password') && isActive('/sign-in' && isActive('/sign-up'))
+        (!(isActive('/') && isActive('/forgot-password') && isActive('/sign-in') && isActive('/sign-up'))) && (
         <div className="btm-nav border-t-2">
             <button
                 onClick={()=>navigate('/log')}

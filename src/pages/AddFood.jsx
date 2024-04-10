@@ -87,11 +87,23 @@ function AddFood() {
     }
     return (
         <div className="pb-5">
-            <div className="flex justify-center">
-                <CustomDropdown 
-                    options={['Bursley', 'East Quad', 'Markley', 'Mosher-Jordan', 'North Quad', 'South Quad', 'Twigs at Oxford']} 
-                    onChange={onChange}
-                />
+            <div className="flex justify-between items-center">
+                <div>
+                    <CustomDropdown 
+                        options={['Bursley', 'East Quad', 'Markley', 'Mosher-Jordan', 'North Quad', 'South Quad', 'Twigs at Oxford']} 
+                        onChange={onChange}
+                    />
+                </div> 
+                <div>
+                        <button 
+                            className="btn btn-primary text-white"
+                            onClick={() => navigate('/manual-entry')}
+                        >
+                            Manual Entry
+                        </button>
+                </div>
+                
+               
             </div>
             {loading ? 
                 <div className="flex justify-center mt-3">
@@ -144,14 +156,14 @@ function AddFood() {
                         </div>
                     }
 
-                    <div className="flex justify-center">
+                    {/* <div className="flex justify-center">
                         <button 
                             className="btn btn-primary text-white"
                             onClick={() => navigate('/manual-entry')}
                         >
                             Manual Entry
                         </button>
-                    </div>
+                    </div> */}
                 </>
             }
         </div>

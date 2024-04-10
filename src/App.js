@@ -12,6 +12,7 @@ import UserInfo from './pages/UserInfo';
 import ManualEntryForm from './pages/ManualEntryForm';
 import Profile from './pages/Profile';
 import AuthRoute from './components/AuthRoute';
+import ReportBug from './pages/ReportBug';
 import {Toaster} from 'react-hot-toast';
 
 
@@ -44,6 +45,10 @@ function App() {
           <Route path="/profile" element={<AuthRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
+          <Route path="/report-bug" element={<AuthRoute />}>
+            <Route path="/report-bug" element={<ReportBug />} />
+          </Route>
+
         </Routes>
       </div>
       <BottomNavbar/>
