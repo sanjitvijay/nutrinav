@@ -34,7 +34,7 @@ function Dashboard() {
                 setUserName(data[0].username.toUpperCase())
                 setDailyValues(data[0].dailyValues)
             }
-            setTimeout(() => {setLoading(false)}, 500)
+            setTimeout(() => {setLoading(false)}, 1000)
         }
 
         

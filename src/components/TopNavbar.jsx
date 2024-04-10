@@ -25,6 +25,7 @@ function TopNavbar() {
         </button> */}
         <button
           className='btn btn-ghost w-48'
+          onClick={()=>navigate('/dashboard')}
         >
           <img src={Nutrinavfull}/>
         </button>
