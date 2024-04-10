@@ -19,7 +19,9 @@ function BottomNavbar() {
 
     return (
         //(!(isActive('/') && isActive('/forgot-password') && isActive('/sign-in' && isActive('/sign-up'))
-        (!(isActive('/') && isActive('/forgot-password') && isActive('/sign-in') && isActive('/sign-up'))) && (
+        (isActive('/dashboard') || isActive('/add-food') || isActive('/log') 
+        || isActive('/profile') || isActive('/user-info') || isActive('/manual-entry')
+        || isActive('/report-bug')) && (
         <div className="btm-nav border-t-2">
             <button
                 onClick={()=>navigate('/log')}
