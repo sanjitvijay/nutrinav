@@ -5,9 +5,11 @@ import { useAuth } from '../context/AuthProvider';
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShareAlt } from "react-icons/fa";
 import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 function TopNavbar() {
   const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth()
 
   const copyLink = () => {
@@ -29,18 +31,20 @@ function TopNavbar() {
             <FaRegCircleUser size={30} color='oklch(var(--s))' />
           </button>
         } */}
-        {user && 
-          <div className="dropdown">
+        {user &&
+          <div className="dropdown" onClick={() => setIsOpen(!isOpen)}>
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
               <FaRegCircleUser size={30} color='oklch(var(--s))' />
             </div>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li onClick={()=>navigate('/profile')}><a>Profile</a></li>
-              <li onClick={logout}><a>Sign Out</a></li>
-              <li onClick={()=>navigate('/report-bug')}><a>Report Bug</a></li>
-            </ul>
+            {isOpen && (
+              <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                <li onClick={() => { navigate('/profile'); setIsOpen(false); }}><a>Profile</a></li>
+                <li onClick={() => { logout(); setIsOpen(false); }}><a>Sign Out</a></li>
+                <li onClick={() => { navigate('/report-bug'); setIsOpen(false); }}><a>Report Bug</a></li>
+              </ul>
+            )}
           </div>
-      }
+        }
       </div>
       <div className="navbar-center">
         {/* <button className="btn btn-ghost ">
