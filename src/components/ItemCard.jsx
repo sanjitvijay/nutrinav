@@ -3,6 +3,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { useState } from "react";
 import { useUserInfo } from "../context/UserInfoProvider";
+import { useAuth } from "../context/AuthProvider";
 function ItemCard({item, time}) {
     const supabase = supabaseClient()
 
@@ -14,9 +15,11 @@ function ItemCard({item, time}) {
 
     const [addLoading, setAddLoading] = useState(false)
 
+    const {user} = useAuth()
+
     const updateValues = async () => {
         setAddLoading(true)
-        const {data: {user}} = await supabase.auth.getUser() 
+        //const {data: {user}} = await supabase.auth.getUser() 
         const userId = user.id
         if(userId !== null){
             const {data, error} = await supabase

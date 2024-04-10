@@ -2,16 +2,17 @@ import { useEffect, useState } from "react";
 import supabaseClient from "../supabaseClient";
 import LogDisplay from "../components/LogDisplay";
 import toast from "react-hot-toast";
-
+import { useAuth } from "../context/AuthProvider";
 function Log() {
     const supabase = supabaseClient();
     const [logs,setLogs] = useState([]);
     const [loading, setLoading] = useState(true)
     const [deleteLoading, setDeleteLoading] = useState(false)
+    const {user} = useAuth()
 
     useEffect(() => {
         const fetchLog = async () => {
-            const { data: { user } } = await supabase.auth.getUser()
+            //const { data: { user } } = await supabase.auth.getUser()
             const { data, error } = await supabase
                 .from('users')
                 .select('log')
@@ -33,8 +34,9 @@ function Log() {
         if(deleteLoading) return
         
         setDeleteLoading(true)
-        const { data: { user } } = await supabase.auth.getUser()
-
+        
+        //const { data: { user }} = await supabase.auth.getUser()
+        console.log(user)
         const newLogs = logs.filter((item) => item.name !== log.name)
         setLogs(newLogs)
 

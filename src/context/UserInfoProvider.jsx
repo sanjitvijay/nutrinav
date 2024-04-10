@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import supabaseClient from "../supabaseClient";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import { useAuth } from "./AuthProvider";
 const supabase = supabaseClient();
 const UserInfoContext = createContext({});
 
@@ -12,10 +12,10 @@ const UserInfoProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     const location = useLocation()
+    const {user} = useAuth()
 
     const fetchUserInfo = async () => {
         setLoading(true);
-        const { data: { user } } = await supabase.auth.getUser();
         const { data, error } = await supabase
             .from('users')
             .select('dailyValues')
@@ -31,7 +31,7 @@ const UserInfoProvider = ({ children }) => {
     useEffect(() => {
         const fetchUserInfo = async () => {
             setLoading(true);
-            const { data: { user } } = await supabase.auth.getUser();
+            //const { data: { user } } = await supabase.auth.getUser();
             if(user){
                 const { data, error } = await supabase
                 .from('users')
