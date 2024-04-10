@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 function UserInfo() {
     const navigate = useNavigate();
     const supabase = supabaseClient();
+    const {user} = useAuth()
     const [formData, setFormData] = useState({
         dailyCalories: 2000,
         dailyProtein: 50,
@@ -19,7 +20,7 @@ function UserInfo() {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const { data: { user } } = await supabase.auth.getUser()
+            //const { data: { user } } = await supabase.auth.getUser()
             const { data, error } = await supabase
                 .from('users')
                 .select('dailyValues')

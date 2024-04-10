@@ -2,10 +2,12 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import supabaseClient from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "../context/AuthProvider";
 function ManualEntryForm() {
     const supabase = supabaseClient();
     const navigate = useNavigate();
+
+    const {user}= useAuth()
 
     const [formData, setFormData] = useState({
         name: '',
@@ -63,7 +65,7 @@ function ManualEntryForm() {
             return
         }
 
-        const{data: {user}} = await supabase.auth.getUser();
+        //const{data: {user}} = await supabase.auth.getUser();
 
         const {data, error} = await supabase
         .from('users')
