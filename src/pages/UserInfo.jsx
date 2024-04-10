@@ -100,7 +100,7 @@ function UserInfo() {
 
     return (
         <div className="flex justify-center items-center">
-            <div className="card px-10 py-5 border-2 shadow-md w-">
+            <div className="card px-10 py-5 border-2 shadow-md">
                 <div className='flex justify-between items-center'>   
                     <h1 className="text-3xl font-bold text-primary mb-5 text-center">Enter Your Target Nutrition Goals</h1>
                 </div>

@@ -132,7 +132,7 @@ function ManualEntryForm() {
     }
     
     return (
-        <div className="card border-2 bg-white p-3">
+        <div className="card border-2 bg-white p-3 shadow-lg">
             <h1 className="text-3xl font-bold text-primary mb-5 text-center">Enter Food Information</h1>
             <form onSubmit={onSubmit}>
                 <div className="form-control mb-5">

@@ -1,10 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import HomePage from '../assets/HomePage.png';
 import RightArrow from "../components/RightArrow";
-
+import { useEffect } from "react";
+import { useAuth } from "../context/AuthProvider";
 function Home() {
     const navigate = useNavigate();
+    const {user}= useAuth()
 
+    useEffect(()=>{
+        if(user){
+            navigate('/dashboard')
+        }
+    })
     return (
         <div> 
             <div className="px-9">
