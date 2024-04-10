@@ -19,7 +19,7 @@ function App() {
   return (
     <>
       <TopNavbar />
-      <div className="p-5 pt-20 pb-16">
+      <div className="p-5 pt-20 pb-20">
         <Toaster />
         <Routes>
           <Route path="/" element={<Home />} />
