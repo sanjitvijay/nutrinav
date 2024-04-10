@@ -92,7 +92,7 @@ function UserInfo() {
             console.log('Error:', error)
         } else {
             toast.success('User info updated successfully');
-            setTimeout(() => {navigate('/dashboard');}, 2000)
+            setTimeout(() => {navigate('/dashboard');}, 1000)
         }
         
     }

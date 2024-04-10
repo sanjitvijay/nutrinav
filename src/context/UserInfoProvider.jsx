@@ -52,7 +52,7 @@ const UserInfoProvider = ({ children }) => {
 
     return (
         <UserInfoContext.Provider value={{ userInfo }}>
-            {!loading && children}
+            {children}
         </UserInfoContext.Provider>
     );
 }

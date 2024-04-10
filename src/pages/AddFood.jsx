@@ -8,7 +8,7 @@ import ToggleIcon from "../components/ToggleIcon";
 
 function AddFood() {
     const supabase = supabaseClient()
-
+    const navigate = useNavigate()
 
     const [diningHall, setDiningHall] = useState('Bursley')
 
@@ -132,6 +132,15 @@ function AddFood() {
                     {showDinner && <MenuDisplay menu={dinner} time={'dinner'}/>}
                 </div>
             }
+
+            <div className="flex justify-center">
+                <button 
+                    className="btn btn-primary text-white"
+                    onClick={() => navigate('/manual-entry')}
+                >
+                    Manual Entry
+                </button>
+            </div>
         </div>
     );
 }

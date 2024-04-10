@@ -9,8 +9,11 @@ import BottomNavbar from './components/BottomNavbar';
 import Log from './pages/Log';
 import ForgotPassword from './pages/ForgotPassword';
 import UserInfo from './pages/UserInfo';
-import {Toaster} from 'react-hot-toast';
+import ManualEntryForm from './pages/ManualEntryForm';
+import Profile from './pages/Profile';
 import AuthRoute from './components/AuthRoute';
+import {Toaster} from 'react-hot-toast';
+
 
 function App() {
   return (
@@ -32,9 +35,14 @@ function App() {
           <Route path="/log" element={<AuthRoute />}>
             <Route path="/log" element={<Log />} />
           </Route>
-          <Route path="/user-info" element={<UserInfo />} />
           <Route path="/user-info" element={<AuthRoute />}>
-            
+            <Route path="/user-info" element={<UserInfo />} />
+          </Route>
+          <Route path="/manual-entry" element={<AuthRoute />}>
+            <Route path="/manual-entry" element={<ManualEntryForm />} />
+          </Route>
+          <Route path="/profile" element={<AuthRoute />}>
+            <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>
       </div>
