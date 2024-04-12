@@ -125,6 +125,7 @@ function ItemCard({item, time}) {
             </div>
             <button 
                 onClick={updateValues}
+                disabled={addLoading}
             >
                 {addLoading ? 
                     (<IoMdCheckmarkCircle size={50} color="oklch(var(--s))"/>) : 
