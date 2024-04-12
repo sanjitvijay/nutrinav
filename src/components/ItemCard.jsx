@@ -4,6 +4,7 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 import { useState } from "react";
 import { useUserInfo } from "../context/UserInfoProvider";
 import { useAuth } from "../context/AuthProvider";
+import toast from "react-hot-toast";
 function ItemCard({item, time}) {
     const supabase = supabaseClient()
 
@@ -28,7 +29,7 @@ function ItemCard({item, time}) {
             .eq('id', userId)
 
             if(error){
-                console.log(error)
+                toast.error('Error fetching user data')
             }
             else {
                 let prev = data[0].nutrition
