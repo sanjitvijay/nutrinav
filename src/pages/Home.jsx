@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import HomePage from '../assets/HomePage.png';
+import NutriNavHomePage from '../assets/NutriNavHomePage.png';
 import RightArrow from "../components/RightArrow";
 import { useEffect } from "react";
 import { useAuth } from "../context/AuthProvider";
@@ -40,7 +40,7 @@ function Home() {
             
 
             <div className="flex justify-center">
-                <img className="shadow-xl" src={HomePage} alt="HomePage"/>
+                <img className="shadow-xl" src={NutriNavHomePage} alt="HomePage"/>
             </div>
 
             
