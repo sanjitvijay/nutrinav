@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+#data-capture-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+div.result {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
+  background: #fffe;
+  border-radius: 8px;
+}
+
+.result p {
+  text-align: center;
+  font-family: Helvetica, sans-serif;
+}
+
+.result button {
+  color: #2ec1ce;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  font-size: 1em;
+}
