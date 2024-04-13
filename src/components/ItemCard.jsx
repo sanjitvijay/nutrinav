@@ -7,7 +7,8 @@ import { useAuth } from "../context/AuthProvider";
 import toast from "react-hot-toast";
 function ItemCard({item, time}) {
     const supabase = supabaseClient()
-
+    //const navigate = useNavigate()
+    
     const {name, nutrition_facts} = item 
     const {calories, total_fat, total_carbohydrate, protein} = nutrition_facts
 

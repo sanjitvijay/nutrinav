@@ -13,6 +13,9 @@ import ManualEntryForm from './pages/ManualEntryForm';
 import Profile from './pages/Profile';
 import AuthRoute from './components/AuthRoute';
 import ReportBug from './pages/ReportBug';
+import CalorieCalc from './pages/CalorieCalc';
+import MoreFoodInfo from './pages/MoreFoodInfo';
+import ScannerPage from './pages/ScannerPage';
 import {Toaster} from 'react-hot-toast';
 
 
@@ -47,6 +50,15 @@ function App() {
           </Route>
           <Route path="/report-bug" element={<AuthRoute />}>
             <Route path="/report-bug" element={<ReportBug />} />
+          </Route>
+          <Route path="/calorie-calc" element={<AuthRoute />}>
+            <Route path="/calorie-calc" element={<CalorieCalc />} />
+          </Route>
+          <Route path="/more-info" element={<AuthRoute />}>
+            <Route path="/more-info" element={<MoreFoodInfo />} />
+          </Route>
+          <Route path="/scanner" element={<AuthRoute />}>
+            <Route path="/scanner" element={<ScannerPage />} />
           </Route>
 
         </Routes>
