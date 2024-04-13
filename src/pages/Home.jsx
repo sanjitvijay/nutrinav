@@ -21,7 +21,7 @@ function Home() {
 
             <div className="flex justify-center mt-5 mb-5">
                 <button 
-                    className="btn btn-primary rounded-full text-white w-full"
+                    className="btn btn-primary rounded-full text-white w-full max-w-xl"
                     onClick={()=>navigate('/sign-up')}
                 > 
                     <span className="text-lg">Sign Up Today </span> <RightArrow/>
@@ -30,7 +30,7 @@ function Home() {
 
             <div className="flex justify-center mt-3 mb-5">
                 <button 
-                    className="btn btn-secondary rounded-full text-white w-full"
+                    className="btn btn-secondary rounded-full text-white w-full max-w-xl"
                     onClick={()=>navigate('/sign-in')}
                 > 
                     <span className="text-lg">Sign In </span> <RightArrow/>
@@ -40,14 +40,8 @@ function Home() {
             
 
             <div className="flex justify-center">
-                <img className="shadow-xl" src={NutriNavHomePage} alt="HomePage"/>
+                <img className="shadow-xl rounded-3xl" src={NutriNavHomePage} alt="HomePage"/>
             </div>
-
-            
-            
-
-           
-            
         </div>
 
     );
