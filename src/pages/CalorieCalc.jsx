@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import supabaseClient  from '../supabaseClient';
@@ -16,7 +16,6 @@ function CalorieCalc() {
         dailyFat: 60,
         dailyProtein: 50
     });
-    
 
     const [results, setResults] = useState({});
     const [modalOpen, setModalOpen] = useState(false);
@@ -132,12 +131,31 @@ function CalorieCalc() {
     };
 
     const updateCaloriesAndClose = async (calories) => {
-        const updatedFormData = {
-            ...formData,
-            dailyCalories: calories, // Update dailyCalories with the selected value
-        };
-    
         try {
+            // Fetch the current user data
+            const { data, error: fetchError } = await supabase
+            .from('users')
+            .select('dailyValues')
+            .eq('id', user.id);
+
+            if (fetchError) {
+                throw fetchError;
+            }
+
+            // Extract the current protein, carbs, and fat values
+            const currentProtein = data[0]?.dailyValues?.dailyProtein;
+            const currentCarbs = data[0]?.dailyValues?.dailyCarbs;
+            const currentFat = data[0]?.dailyValues?.dailyFat;
+
+            // Create the updated form data object with the new calories value and current protein, carbs, and fat values
+            const updatedFormData = {
+                ...formData,
+                dailyCalories: calories, // Update dailyCalories with the selected value
+                dailyProtein: currentProtein,
+                dailyCarbs: currentCarbs,
+                dailyFat: currentFat
+            };
+            
             const { error } = await supabase
                 .from('users')
                 .upsert([{ id: user.id, dailyValues: updatedFormData }]);
@@ -146,7 +164,7 @@ function CalorieCalc() {
     
             setFormData(updatedFormData); // Update the component's state
             toast.success('Daily calories updated successfully');
-            setModalOpen(false); // Assuming you have a modal open state
+            setCaloriesModalOpen(false); // Assuming you have a modal open state
             setTimeout(() => {
                 navigate('/dashboard');
             }, 1000); // Navigate after update
@@ -157,28 +175,47 @@ function CalorieCalc() {
     };
     
     const updateMacrosAndClose = async (carbs, fat, protein) => {
-        const updatedFormData = {
-            ...formData,
-            dailyCarbs: carbs,
-            dailyFat: fat,
-            dailyProtein: protein
-        };
-    
         try {
+            // Fetch the current user data
+            const { data, error: fetchError } = await supabase
+                .from('users')
+                .select('dailyValues')
+                .eq('id', user.id);
+    
+            if (fetchError) {
+                throw fetchError;
+            }
+    
+            // Extract the current dailyCalories value
+            const currentCalories = data[0]?.dailyValues?.dailyCalories;
+    
+            // Create the updated form data object with the new macronutrient values and current calories
+            const updatedFormData = {
+                ...formData,
+                dailyCarbs: carbs,
+                dailyFat: fat,
+                dailyProtein: protein,
+                dailyCalories: currentCalories // Keep the current dailyCalories value
+            };
+    
+            // Upsert the updated form data into the database
             const { error } = await supabase
                 .from('users')
                 .upsert([{ id: user.id, dailyValues: updatedFormData }]);
     
-            if (error) throw error;
+            if (error) {
+                throw error;
+            }
     
-            setFormData(updatedFormData); // Update the component's state
+            // Update the component's state
+            setFormData(updatedFormData);
             toast.success('Daily macronutrients updated successfully');
             setMacronutrientsModalOpen(false); // Assuming you have a modal open state
             setTimeout(() => {
                 navigate('/dashboard');
             }, 1000); // Navigate after update
         } catch (error) {
-            console.error('Error updating daily maconutrients:', error);
+            console.error('Error updating daily macronutrients:', error);
             toast.error('Error updating daily macronutrients');
         }
     };    
