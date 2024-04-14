@@ -22,6 +22,14 @@ function Profile() {
                     Maintenance Calorie Calculator <RightArrow />
                 </button>
             </div>
+            <div>
+                <button 
+                    className="btn btn-primary mt-5 text-lg"
+                    onClick={() => navigate('/scanner')}
+                >
+                    Barcode Scanner <RightArrow />
+                </button>
+            </div>
         </div>
     );
 }
