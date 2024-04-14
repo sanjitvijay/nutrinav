@@ -76,9 +76,7 @@ function CalorieCalc() {
             weightLoss: Math.round(weightLossCalories),
             weightGain: Math.round(weightGainCalories)
         });
-
-        console.log(`BMR: ${bmr}, Maintenance: ${maintenanceCalories}, Mild Weight Loss: ${mildWeightLossCalories}, Weight Loss: ${weightLossCalories}, Weight Gain: ${weightGainCalories}`);
-        
+                
         // Open modal
         setModalOpen(true);
     };
@@ -112,7 +110,9 @@ function CalorieCalc() {
     return (
         <div className="flex justify-center items-center">
             <div className="card px-10 py-5 border-2 shadow-md">
-                <h1 className="text-3xl font-bold text-primary mb-5 text-center">Calorie Calculator</h1>
+                <div className="flex justify-between items-center">
+                    <h1 className="text-3xl font-bold text-primary mb-5 text-center">Calorie Calculator</h1>
+                </div>
                 <form onSubmit={handleSubmit}>
                     <div className="form-control mb-5">
                         <label htmlFor="age" className="text-gray-500 mb-1">Age</label>
@@ -126,6 +126,7 @@ function CalorieCalc() {
                             className="input input-bordered"
                         />
                     </div>
+
                     <div className="form-control mb-5">
                         <label htmlFor="gender" className="text-gray-500 mb-1">Gender</label>
                         <select 
@@ -138,6 +139,7 @@ function CalorieCalc() {
                             <option value="female">Female</option>
                         </select>
                     </div>
+
                     <div className="form-control mb-5">
                         <label htmlFor="heightFeet" className="text-gray-500 mb-1">Height (feet)</label>
                         <input 
@@ -150,6 +152,7 @@ function CalorieCalc() {
                             className="input input-bordered"
                         />
                     </div>
+
                     <div className="form-control mb-5">
                         <label htmlFor="heightInches" className="text-gray-500 mb-1">Height (inches)</label>
                         <input 
@@ -162,6 +165,7 @@ function CalorieCalc() {
                             className="input input-bordered"
                         />
                     </div>
+
                     <div className="form-control mb-5">
                         <label htmlFor="weight" className="text-gray-500 mb-1">Weight (lbs)</label>
                         <input 
@@ -174,6 +178,7 @@ function CalorieCalc() {
                             className="input input-bordered"
                         />
                     </div>
+
                     <div className="form-control mb-5">
                         <label htmlFor="activityLevel" className="text-gray-500 mb-1">Activity Level</label>
                         <select 
@@ -191,6 +196,7 @@ function CalorieCalc() {
                             <option value="extra-active">Extra Active: very intense exercise daily, or physical job</option>
                         </select>
                     </div>
+                    
                     <button 
                         type="submit" 
                         className="btn btn-primary w-full mt-5 text-white"

@@ -10,7 +10,21 @@ function ItemCard({item, time}) {
     //const navigate = useNavigate()
     
     const {name, nutrition_facts} = item 
-    const {calories, total_fat, total_carbohydrate, protein} = nutrition_facts
+    const {
+        calories,
+        total_fat,
+        total_carbohydrate,
+        protein,
+        iron,
+        sodium,
+        sugars,
+        calcium,
+        vitamin_a,
+        vitamin_c,
+        cholesterol,
+        dietary_fiber,
+        saturated_fat,
+    } = nutrition_facts;
 
     const { userInfo } = useUserInfo();
     const {dailyFat, dailyCarbs, dailyProtein, dailyCalories} = userInfo
@@ -79,12 +93,13 @@ function ItemCard({item, time}) {
         setAddLoading(false)
     }
     
+    const [modalOpen, setModalOpen] = useState(false);
+
     return (
-        <div className="flex justify-between bg-white hover:shadow-md rounded-lg p-2 items-center border-2 cursor-pointer">
-            <div className="w-full">
+        <div className="flex justify-between bg-white hover:shadow-md rounded-lg p-2 items-center border-2 cursor-pointer">   
+            <div className="w-full" onClick={() => setModalOpen(true)}>
                 <h2 className="font-bold text-primary mb-1">{name}</h2>
                 
-
                 <div className="flex justify-between">
                     <div>
                         <div className="radial-progress text-primary text-center" style={{"--value":((calories)/dailyCalories) * 100, "--size" : "3rem", "--thickness" : "4px", boxShadow: 'inset 0 0 0 4px #e5e7eb'}} 
@@ -133,6 +148,26 @@ function ItemCard({item, time}) {
                     (<IoMdAddCircle size={50} color="oklch(var(--s))"/>)}
                 
             </button>
+            {/* Modal */}
+            {modalOpen && (
+                <dialog id="my_modal_2" className="modal" open>
+                    <div className="modal-box px-10 py-5 border-2 shadow-md">
+                        <h3 className="font-bold text-lg">Additional Nutrition Info</h3>
+                        <p>Iron: {iron}</p>
+                        <p>Sodium: {sodium}</p>
+                        <p>Sugars: {sugars}</p>
+                        <p>Calcium: {calcium}</p>
+                        <p>Vitamin A: {vitamin_a}</p>
+                        <p>Vitamin C: {vitamin_c}</p>
+                        <p>Cholesterol: {cholesterol}</p>
+                        <p>Dietary Fiber: {dietary_fiber}</p>
+                        <p>Saturated Fat: {saturated_fat}</p>
+                    </div>
+                    <form method="dialog" className="modal-backdrop">
+                        <button onClick={() => setModalOpen(false)}>Close</button>
+                    </form>
+                </dialog>
+            )}
         </div>
     );
 }
