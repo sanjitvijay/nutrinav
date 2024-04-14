@@ -152,16 +152,16 @@ function ItemCard({item, time}) {
             {modalOpen && (
                 <dialog id="my_modal_2" className="modal" open>
                     <div className="modal-box px-10 py-5 border-2 shadow-md">
-                        <h3 className="font-bold text-lg">Additional Nutrition Info</h3>
-                        <p>Iron: {iron}</p>
-                        <p>Sodium: {sodium}</p>
-                        <p>Sugars: {sugars}</p>
-                        <p>Calcium: {calcium}</p>
-                        <p>Vitamin A: {vitamin_a}</p>
-                        <p>Vitamin C: {vitamin_c}</p>
-                        <p>Cholesterol: {cholesterol}</p>
-                        <p>Dietary Fiber: {dietary_fiber}</p>
-                        <p>Saturated Fat: {saturated_fat}</p>
+                        <h3 className="text-primary font-bold text-lg">Additional Nutrition Info</h3>
+                        <p>Iron: <span className="text-secondary">{iron}%</span></p> {/*18mg*/}
+                        <p>Sodium: <span className="text-secondary">{((sodium/2300)*100).toFixed(2)}%</span></p> {/*2300mg*/}
+                        <p>Calcium: <span className="text-secondary">{calcium}%</span></p> {/*1100mg*/}
+                        <p>Vitamin A: <span className="text-secondary">{vitamin_a}%</span></p> {/*900 mcg*/} 
+                        <p>Vitamin C: <span className="text-secondary">{vitamin_c}%</span></p> {/*90mg for men and 75mg for women*/}
+                        <p>Dietary Fiber: <span className="text-secondary">{(dietary_fiber/31.5).toFixed(2)}%</span></p> {/*38 grams for men and 25 grams for women*/}
+                        <p>Sugars: <span className="text-secondary">{(sugars/44).toFixed(2)}%</span></p> {/*38 grams for women and 50 grams for men*/}
+                        <p>Cholesterol: <span className="text-secondary">{(cholesterol/200).toFixed(2)}%</span></p> {/*200 mg*/}
+                        <p>Saturated Fat: <span className="text-secondary">{(saturated_fat/calories).toFixed(2)}%</span></p> {/*5% of calories*/}
                     </div>
                     <form method="dialog" className="modal-backdrop">
                         <button onClick={() => setModalOpen(false)}>Close</button>

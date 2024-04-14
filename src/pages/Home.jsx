@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import NutriNavHomePage from '../assets/NutriNavHomePage.png';
+import NutriNavHomePage from '../assets/HomePage.jpeg';
 import RightArrow from "../components/RightArrow";
 import { useEffect } from "react";
 import { useAuth } from "../context/AuthProvider";
