@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthProvider";
 function ManualEntryForm() {
     const supabase = supabaseClient();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const {user}= useAuth()
 
@@ -66,7 +67,7 @@ function ManualEntryForm() {
         }
 
         //const{data: {user}} = await supabase.auth.getUser();
-
+        setLoading(true)
         const {data, error} = await supabase
         .from('users')
         .select('*')
@@ -76,34 +77,56 @@ function ManualEntryForm() {
             toast.error('Error fetching user data')
         }
         else{
+            // Update user nutrition
             const newNutritionFacts = Object.fromEntries(
                 Object.entries(formData.nutrition_facts).map(([key, value]) => [key, value * formData.servings])
             )
-
-            const logs = data[0].log
-            const newLog = {name, time, servings, nutrition_facts: newNutritionFacts}
-            const newLogs = [...logs, newLog]
-            
 
             let prev = data[0].nutrition
             for (let key in prev) {
                 prev[key] = String(Number(prev[key]) + Number(newNutritionFacts[key]))
             }
-            console.log(prev)
-            const {error} = await supabase
-            .from('users')
-            .upsert([{id: user.id, log: newLogs}])
 
             const {error: error2} = await supabase
             .from('users')
             .upsert([{id: user.id, nutrition: prev}])
 
-            if(error || error2){
-                toast.error('Error adding food to log')
+            // Update user log
+            let prevLog = data[0].log
+            let changed = false
+
+            prevLog = prevLog.map(logItem => {
+                if (logItem.name === name && logItem.time === time) {
+                    // Double the nutrition values of the matching logItem
+                    changed = true
+                    const changedNutritionFacts = Object.fromEntries(
+                        Object.entries(logItem.nutrition_facts).map(([key, value]) => [key, String(Number(value) + Number(newNutritionFacts[key]))])
+                    );
+                    const updatedServings = String(Number(logItem.servings) + Number(servings));
+                    return { ...logItem, nutrition_facts: changedNutritionFacts, servings: updatedServings};
+                } else {
+                    // Return the logItem unchanged
+                    return logItem;
+                }
+            });
+
+            if(!changed){
+                const logItem = {nutrition_facts: newNutritionFacts, name, time, servings}
+                prevLog.push(logItem)
+            }
+
+           
+            const {error: error3} = await supabase
+                .from('users')
+                .upsert([{ id: user.id, log: prevLog }]);
+            
+            if(error3){
+                toast.error("Error adding to log")
             }
             else{
-                toast.success('Food added to log')
-                setTimeout(() => {navigate('/dashboard')}, 1000)
+                navigate('/dashboard')
+                toast.success("Added to log")
+                setLoading(false)
             }
         }
     }
@@ -167,7 +190,7 @@ function ManualEntryForm() {
                     <span className="text-gray-500 mb-1">Servings</span>
                     <label className="input input-bordered flex justify-between items-center gap-2">
                         <input
-                            type="number"
+                            type="text"
                             id="servings"
                             value={servings}
                             onChange={onChange}
@@ -194,6 +217,7 @@ function ManualEntryForm() {
                         type="submit" 
                         className="btn btn-primary mt-3 text-white"
                         onClick={onSubmit}
+                        disabled={loading}
                     >
                         Add Food
                     </button>

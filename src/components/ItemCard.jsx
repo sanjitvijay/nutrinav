@@ -4,11 +4,27 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 import { useState } from "react";
 import { useUserInfo } from "../context/UserInfoProvider";
 import { useAuth } from "../context/AuthProvider";
+import toast from "react-hot-toast";
 function ItemCard({item, time}) {
     const supabase = supabaseClient()
-
+    //const navigate = useNavigate()
+    
     const {name, nutrition_facts} = item 
-    const {calories, total_fat, total_carbohydrate, protein} = nutrition_facts
+    const {
+        calories,
+        total_fat,
+        total_carbohydrate,
+        protein,
+        iron,
+        sodium,
+        sugars,
+        calcium,
+        vitamin_a,
+        vitamin_c,
+        cholesterol,
+        dietary_fiber,
+        saturated_fat,
+    } = nutrition_facts;
 
     const { userInfo } = useUserInfo();
     const {dailyFat, dailyCarbs, dailyProtein, dailyCalories} = userInfo
@@ -28,7 +44,7 @@ function ItemCard({item, time}) {
             .eq('id', userId)
 
             if(error){
-                console.log(error)
+                toast.error('Error fetching user data')
             }
             else {
                 let prev = data[0].nutrition
@@ -77,12 +93,13 @@ function ItemCard({item, time}) {
         setAddLoading(false)
     }
     
+    const [modalOpen, setModalOpen] = useState(false);
+
     return (
-        <div className="flex justify-between bg-white hover:shadow-md rounded-lg p-2 items-center border-2 cursor-pointer">
-            <div className="w-full">
+        <div className="flex justify-between bg-white hover:shadow-md rounded-lg p-2 items-center border-2 cursor-pointer">   
+            <div className="w-full" onClick={() => setModalOpen(true)}>
                 <h2 className="font-bold text-primary mb-1">{name}</h2>
                 
-
                 <div className="flex justify-between">
                     <div>
                         <div className="radial-progress text-primary text-center" style={{"--value":((calories)/dailyCalories) * 100, "--size" : "3rem", "--thickness" : "4px", boxShadow: 'inset 0 0 0 4px #e5e7eb'}} 
@@ -124,12 +141,33 @@ function ItemCard({item, time}) {
             </div>
             <button 
                 onClick={updateValues}
+                disabled={addLoading}
             >
                 {addLoading ? 
                     (<IoMdCheckmarkCircle size={50} color="oklch(var(--s))"/>) : 
                     (<IoMdAddCircle size={50} color="oklch(var(--s))"/>)}
                 
             </button>
+            {/* Modal */}
+            {modalOpen && (
+                <dialog id="my_modal_2" className="modal" open>
+                    <div className="modal-box px-10 py-5 border-2 shadow-md">
+                        <h3 className="text-primary font-bold text-lg">Additional Nutrition Info</h3>
+                        <p>Iron: <span className="text-secondary">{iron}%</span></p> {/*18mg*/}
+                        <p>Sodium: <span className="text-secondary">{((sodium/2300)*100).toFixed(2)}%</span></p> {/*2300mg*/}
+                        <p>Calcium: <span className="text-secondary">{calcium}%</span></p> {/*1100mg*/}
+                        <p>Vitamin A: <span className="text-secondary">{vitamin_a}%</span></p> {/*900 mcg*/} 
+                        <p>Vitamin C: <span className="text-secondary">{vitamin_c}%</span></p> {/*90mg for men and 75mg for women*/}
+                        <p>Dietary Fiber: <span className="text-secondary">{(dietary_fiber/31.5).toFixed(2)}%</span></p> {/*38 grams for men and 25 grams for women*/}
+                        <p>Sugars: <span className="text-secondary">{(sugars/44).toFixed(2)}%</span></p> {/*38 grams for women and 50 grams for men*/}
+                        <p>Cholesterol: <span className="text-secondary">{(cholesterol/200).toFixed(2)}%</span></p> {/*200 mg*/}
+                        <p>Saturated Fat: <span className="text-secondary">{(saturated_fat/calories).toFixed(2)}%</span></p> {/*5% of calories*/}
+                    </div>
+                    <form method="dialog" className="modal-backdrop">
+                        <button onClick={() => setModalOpen(false)}>Close</button>
+                    </form>
+                </dialog>
+            )}
         </div>
     );
 }

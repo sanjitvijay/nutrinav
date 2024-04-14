@@ -35,9 +35,7 @@ function Log() {
         
         setDeleteLoading(true)
         
-        //const { data: { user }} = await supabase.auth.getUser()
-        console.log(user)
-        const newLogs = logs.filter((item) => item.name !== log.name)
+        const newLogs = logs.filter((item) => (item.name !== log.name || item.time !== log.time))
         setLogs(newLogs)
 
         const { error } = await supabase
