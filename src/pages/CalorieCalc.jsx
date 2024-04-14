@@ -108,7 +108,7 @@ function CalorieCalc() {
     };    
     
     return (
-        <div className="flex justify-center items-center">
+        <div>
             <div className="card px-10 py-5 border-2 shadow-md">
                 <div className="flex justify-between items-center">
                     <h1 className="text-3xl font-bold text-primary mb-5 text-center">Calorie Calculator</h1>
