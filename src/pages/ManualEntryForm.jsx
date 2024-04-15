@@ -50,6 +50,11 @@ function ManualEntryForm() {
         total_carbohydrate: 'g'
     };   
 
+    const isNumber = (value) =>{
+        const number = Number(value)
+        return typeof number === 'number' && isFinite(number) && number >= 0
+    }
+
     const onSubmit = async (e) => {
         e.preventDefault();
 
@@ -57,14 +62,29 @@ function ManualEntryForm() {
             toast.error('Name is required')
             return
         }
+
+        if(!isNumber(servings)){
+            toast.error('Servings must be a positive number')
+            return
+        }
+
         if(servings < 1){
             toast.error('Servings must be greater than 0')
             return
         }
-        if(formData.nutrition_facts.calories <= 0){
+
+        if(formData.nutrition_facts.calories === 0 ){
             toast.error('Calories must be greater than 0')
             return
         }
+
+        for (let key in formData.nutrition_facts) {
+            if (!isNumber(formData.nutrition_facts[key])) {
+                toast.error("All nutrition facts must be positive numbers");
+                return;
+            }
+        }
+
 
         //const{data: {user}} = await supabase.auth.getUser();
         setLoading(true)
