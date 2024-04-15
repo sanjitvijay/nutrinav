@@ -38,6 +38,10 @@ function SignIn() {
     }
 
     const handleForgotPassword = async () => {
+        if(email.length === 0){
+            toast.error('Email is required')
+            return
+        }
         const { error } = await forgotPassword(email)
 
         if (error) {

@@ -53,7 +53,7 @@ function ManualEntryForm() {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        if(name === ''){
+        if(name.length === 0){
             toast.error('Name is required')
             return
         }

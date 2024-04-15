@@ -68,10 +68,10 @@ function Dashboard() {
                     <>
                         <h2 className="text-3xl font-bold mb-2 text-primary">Calories</h2>
                         <div className="flex justify-between items-center">
-                            <div className="radial-progress text-primary text-center" style={{"--value":((dailyCalories-calories)/dailyCalories) * 100, "--size" : "8rem", "--thickness" : "12px", boxShadow: 'inset 0 0 0 12px #e5e7eb'}} 
+                            <div className="radial-progress text-primary text-center" style={{"--value":((dailyCalories-calories < 0 ? 0 : dailyCalories-calories)/dailyCalories) * 100, "--size" : "8rem", "--thickness" : "12px", boxShadow: 'inset 0 0 0 12px #e5e7eb'}} 
                                 role="progressbar">
                                 <div>
-                                    <span className="text-lg text-secondary font-bold">{dailyCalories-calories}</span><br/>
+                                    <span className="text-lg text-secondary font-bold">{dailyCalories-calories < 0 ? 0 : dailyCalories-calories}</span><br/>
                                     <span className="text-xs ">remaining</span>
                                 </div>
                                 

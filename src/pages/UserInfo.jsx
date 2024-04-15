@@ -41,8 +41,31 @@ function UserInfo() {
         }));
     }
 
+    const isNumber = (value) =>{
+        const number = Number(value)
+        return typeof number === 'number' && isFinite(number)
+    }
+
     const onSubmit = async (e) => {
         e.preventDefault(); 
+
+        if (!isNumber(dailyCalories)) {
+            toast.error("Daily Calories must be a number");
+            return;
+        }
+
+        if (!isNumber(dailyFat)) {
+            toast.error("Daily Fat must be a number");
+            return;
+        }
+        if (!isNumber(dailyCarbs)) {
+            toast.error("Daily Carbs must be a number");
+            return;
+        }
+        if (!isNumber(dailyProtein)) {
+            toast.error("Daily Protein must be a number");
+            return;
+        }
         if(dailyCalories < 1000){
             toast.error("Daily Calories must be greater than 1000 Cals")
             return

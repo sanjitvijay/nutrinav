@@ -10,6 +10,11 @@ function ReportBug() {
     const onSubmit = async (e) => {
         e.preventDefault() 
 
+        if(form.length === 0){
+            toast.error("Description is required")
+            return
+        }
+        
         if(form.length >= 1000){
             toast.error("Description must be less than 1000 characters")
             return 
