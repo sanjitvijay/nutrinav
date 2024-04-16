@@ -97,9 +97,9 @@ function AddFood() {
                 <div>
                         <button 
                             className="btn btn-primary text-white"
-                            onClick={() => navigate('/manual-entry')}
+                            onClick={() => navigate('/choose')}
                         >
-                            Manual Entry
+                            Add More
                         </button>
                 </div>
                 

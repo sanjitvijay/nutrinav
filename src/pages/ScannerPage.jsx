@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserBarcodeReader } from '@zxing/library';
+import { useNavigate } from 'react-router-dom';
 
 const ScannerPage = () => {
     const [screen, setScreen] = useState('choice');
@@ -68,6 +69,8 @@ const ScannerPage = () => {
       if (input) fetchData(input);
     };
   
+    const navigate = useNavigate();
+
     const handleSeeMore = () => {
       setVisibleResults(prev => Math.min(prev + 10, results.length));
     };
@@ -91,8 +94,9 @@ const ScannerPage = () => {
         <header className="App-header">
           {screen === 'choice' && (
             <div>
-              <button onClick={() => handleScreenChoice('scanner')}>Scan Barcode</button>
-              <button onClick={() => handleScreenChoice('manual')}>Enter Food Name</button>
+              <button className="btn btn-primary text-white" onClick={() => handleScreenChoice('scanner')}>Scan Barcode</button>
+              <button className="btn btn-primary text-white" onClick={() => handleScreenChoice('manual')}>Enter Food Name</button>
+              <button onClick={() => navigate(-1)} className="btn btn-secondary text-white"> Back </button>
             </div>
           )}
           {(screen === 'scanner' || screen === 'manual') && (
@@ -106,7 +110,8 @@ const ScannerPage = () => {
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Enter barcode manually"
                   />
-                  <button onClick={handleSubmit}>Submit</button>
+                  <button className="btn btn-primary text-white"
+                  onClick={handleSubmit}>Submit</button>
                 </>
               )}
               {screen === 'manual' && (
@@ -117,21 +122,25 @@ const ScannerPage = () => {
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Search for food by name"
                   />
-                  <button onClick={handleSubmit}>Search</button>
+                  <button className="btn btn-primary text-white"
+                  onClick={handleSubmit}>Search</button>
                 </>
               )}
-              <button onClick={() => handleScreenChoice('choice')}>Back</button>
+              <button className="btn btn-secondary text-white"
+              onClick={() => handleScreenChoice('choice')}>Back</button>
             </div>
           )}
   
           {results.slice(0, visibleResults).map((item, index) => (
-            <button key={index} onClick={() => handleButtonClick(item)} style={{ margin: "5px" }}>
+            <button key={index} className="btn btn-primary text-white"
+            onClick={() => handleButtonClick(item)} style={{ margin: "5px" }}>
               {item.product_name || item.product_name_fr || 'Unknown'}
             </button>
           ))}
   
           {results.length > visibleResults && (
-            <button onClick={handleSeeMore}>See More</button>
+            <button className="btn btn-secondary text-white"
+            onClick={handleSeeMore}>See More</button>
           )}
   
           {selectedFood && (

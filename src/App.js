@@ -16,6 +16,7 @@ import ReportBug from './pages/ReportBug';
 import CalorieCalc from './pages/CalorieCalc';
 import MoreFoodInfo from './pages/MoreFoodInfo';
 import ScannerPage from './pages/ScannerPage';
+import Choose from './pages/Choose';
 import {Toaster} from 'react-hot-toast';
 
 
@@ -60,7 +61,9 @@ function App() {
           <Route path="/scanner" element={<AuthRoute />}>
             <Route path="/scanner" element={<ScannerPage />} />
           </Route>
-
+          <Route path="/choose" element={<AuthRoute />}>
+            <Route path="/choose" element={<Choose />} />
+          </Route>
         </Routes>
       </div>
       <BottomNavbar/>
