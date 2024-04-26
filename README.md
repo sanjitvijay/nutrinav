@@ -10,6 +10,8 @@ Future Features:
 
 Feel free to report bugs or recommend future features on the “Report Bugs” page. 
 
+[Link to App](https://www.nutrinav.app/dashboard)
+
 ## Tech Stack
 Frontend: React.js, TailwindCSS, DaisyUI component library, Figma
 
