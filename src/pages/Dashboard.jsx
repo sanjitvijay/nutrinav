@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {format} from 'date-fns'
 import { useAuth } from "../context/AuthProvider";
+import RightArrow from "../components/RightArrow";
+
 function Dashboard() {
     const supabase = supabaseClient()
     const navigate = useNavigate()
@@ -66,24 +68,33 @@ function Dashboard() {
                 {loading ? (<div className="skeleton h-48 w-full"></div>) : 
                 (   
                     <>
-                        <h2 className="text-3xl font-bold mb-2 text-primary">Calories</h2>
-                        <div className="flex justify-between items-center">
-                            <div className="radial-progress text-primary text-center" style={{"--value":((dailyCalories-calories)/dailyCalories) * 100, "--size" : "8rem", "--thickness" : "12px", boxShadow: 'inset 0 0 0 12px #e5e7eb'}} 
-                                role="progressbar">
-                                <div>
-                                    <span className="text-lg text-secondary font-bold">{dailyCalories-calories}</span><br/>
-                                    <span className="text-xs ">remaining</span>
-                                </div>
-                                
-                            </div>
-        
-                            <div className="mr-5">
-                                <h2 className="text-2xl font-bold mb-2 text-primary">Goal:</h2>
-                                <p className="text-xl font-bold text-left text-secondary">{dailyCalories} Cals</p>
-                                <h2 className="text-2xl font-bold mb-2 text-primary">Food:</h2>
-                                <p className="text-xl font-bold text-left text-secondary">{calories} Cals</p>
+                    <div className="flex justify-between items-center mb-2">
+    <h2 className="text-3xl font-bold text-primary">Calories</h2>
+    <button
+        className="text-xl font-bold text-primary bg-white border border-primary rounded hover:bg-primary hover:text-white transition-all duration-300 px-4 py-1 flex items-center"
+        onClick={() => navigate('/user-info')}
+    >
+        Edit
+    </button>
+</div>
+
+                    <div className="flex justify-between items-center">
+                        <div className="radial-progress text-primary text-center" style={{ "--value": ((dailyCalories - calories) / dailyCalories) * 100, "--size": "8rem", "--thickness": "12px", boxShadow: 'inset 0 0 0 12px #e5e7eb' }}
+                            role="progressbar">
+                            <div>
+                                <span className="text-lg text-secondary font-bold">{dailyCalories - calories}</span><br />
+                                <span className="text-xs">remaining</span>
                             </div>
                         </div>
+
+                        <div className="mr-5">
+                            <h2 className="text-2xl font-bold mb-2 text-primary">Goal:</h2>
+                            <p className="text-xl font-bold text-left text-secondary">{dailyCalories} Cals</p>
+                            <h2 className="text-2xl font-bold mb-2 text-primary">Food:</h2>
+                            <p className="text-xl font-bold text-left text-secondary">{calories} Cals</p>
+                        </div>
+                    </div>
+
                     </>
                 )}
                 
