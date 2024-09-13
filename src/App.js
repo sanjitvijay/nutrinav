@@ -18,6 +18,8 @@ import MoreFoodInfo from './pages/MoreFoodInfo';
 import ScannerPage from './pages/ScannerPage';
 import Choose from './pages/Choose';
 import {Toaster} from 'react-hot-toast';
+import Edit from './pages/Edit';
+
 
 
 function App() {
@@ -63,6 +65,9 @@ function App() {
           </Route>
           <Route path="/choose" element={<AuthRoute />}>
             <Route path="/choose" element={<Choose />} />
+          </Route>
+          <Route path="/edit" element={<AuthRoute />}>
+            <Route path="/edit" element={<Edit />} />
           </Route>
         </Routes>
       </div>

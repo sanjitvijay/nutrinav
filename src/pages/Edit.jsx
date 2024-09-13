@@ -1,0 +1,29 @@
+import RightArrow from "../components/RightArrow";
+import { useNavigate } from "react-router-dom";
+function Edit() {
+    const navigate = useNavigate();
+    
+    return (
+        <div>
+            <div>
+                <h1 className="text-primary font-bold text-3xl">Profile</h1>
+                <button 
+                    className="btn btn-primary mt-5 text-lg"
+                    onClick={() => navigate('/user-info')}
+                >
+                    Manual Input  <RightArrow />
+                </button>
+            </div>
+            <div>
+                <button 
+                    className="btn btn-primary mt-5 text-lg"
+                    onClick={() => navigate('/calorie-calc')}
+                >
+                    Automatic Calorie Calculator <RightArrow />
+                </button>
+            </div>
+        </div>
+    );
+}
+
+export default Edit;

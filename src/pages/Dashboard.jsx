@@ -72,7 +72,7 @@ function Dashboard() {
     <h2 className="text-3xl font-bold text-primary">Calories</h2>
     <button
         className="text-xl font-bold text-primary bg-white border border-primary rounded hover:bg-primary hover:text-white transition-all duration-300 px-4 py-1 flex items-center"
-        onClick={() => navigate('/user-info')}
+        onClick={() => navigate('/edit')}
     >
         Edit
     </button>
