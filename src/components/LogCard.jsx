@@ -1,4 +1,4 @@
-import { CiTrash } from "react-icons/ci";
+import { CiTrash, CiEdit } from "react-icons/ci";
 import { useUserInfo } from "../context/UserInfoProvider";
 
 function LogCard({log, onDelete}) {
@@ -17,16 +17,19 @@ function LogCard({log, onDelete}) {
                         <p className="mb-2">Servings: {servings}</p>
                     </div>
                     <div className="mb-2 flex justify">
+                        <button
+                            className="mr-2"
+                            
+                        >
+                            <CiEdit size={25} />
+                        </button>
+
                         <button 
                             className="mr-2"
                             onClick={()=>onDelete(log)}
                         >
                             <CiTrash size={25} color="red" />
                         </button>
-
-                        {/* <button>
-                            <MdOutlineEdit size={25} />
-                        </button> */}
                     </div>
                 </div>
                 <div className="flex justify-between">
