@@ -147,17 +147,20 @@ const ScannerPage = () => {
             <div>
               <h2>Product Information:</h2>
               <p><strong>Name:</strong> {selectedFood.product_name || 'N/A'}</p>
-              <p><strong>Brands:</strong> {selectedFood.brands || 'N/A'}</p>
+              <p><strong>Brand:</strong> {selectedFood.brands || 'N/A'}</p>
               <p><strong>Quantity:</strong> {selectedFood.quantity || 'N/A'}</p>
               <p><strong>Ingredients:</strong> {selectedFood.ingredients_text || 'N/A'}</p>
               <p><strong>Sugar:</strong> {selectedFood.sugars_serving || 'N/A'}</p>
   
               <img src={selectedFood.image_url} alt={`Product named: ${selectedFood.product_name}`} style={{ maxWidth: '100px', maxHeight: '100px' }} />
-              {Object.entries(selectedFood.nutriments).map(([key, value]) => (
+              {Object.entries(selectedFood.nutriments)
+              .filter(([key, _]) => key.endsWith('serving'))
+              .map(([key, value]) => (
                 <p key={key}>
                   {key}: {renderPropertyValue(value)}
                 </p>
               ))}
+
             </div>
           )}
         </header>
