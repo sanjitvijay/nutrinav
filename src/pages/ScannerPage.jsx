@@ -8,6 +8,7 @@ const ScannerPage = () => {
     const [results, setResults] = useState([]);
     const [selectedFood, setSelectedFood] = useState(null);
     const [visibleResults, setVisibleResults] = useState(5);
+    const [loading, setLoading] = useState(false); // New loading state
     const openFoodFactsUrl = 'https://world.openfoodfacts.org';
   
     useEffect(() => {
@@ -27,17 +28,21 @@ const ScannerPage = () => {
     }, [screen]);
   
     const fetchData = (query) => {
+      setLoading(true); // Start loading when fetching data
+      setResults([]); // Clear previous results
+      setSelectedFood(null); // Clear previous selected food
+  
       let url = /^\d+$/.test(query) ? `${openFoodFactsUrl}/api/v2/product/${query}.json` :
         `${openFoodFactsUrl}/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1`;
     
       fetch(url)
         .then(response => response.json())
         .then(data => {
+          setLoading(false); // Stop loading when data is fetched
           if (data.status === 1) {
             setSelectedFood(data.product);
             setResults([]);
     
-            // Log all keys of the nutriments object
             if (data.product && data.product.nutriments) {
               console.log("Nutriment keys:", Object.keys(data.product.nutriments));
             }
@@ -52,6 +57,7 @@ const ScannerPage = () => {
         })
         .catch(error => {
           console.error('Error fetching data:', error);
+          setLoading(false); // Stop loading in case of error
         });
     };
     
@@ -131,6 +137,9 @@ const ScannerPage = () => {
             </div>
           )}
   
+          {/* Loading icon */}
+          {loading && <div className="loading-icon">Loading...</div>}
+
           {results.slice(0, visibleResults).map((item, index) => (
             <button key={index} className="btn btn-primary text-white"
             onClick={() => handleButtonClick(item)} style={{ margin: "5px" }}>
