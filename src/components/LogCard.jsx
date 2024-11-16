@@ -78,6 +78,7 @@ function LogCard({ log, onDelete, onUpdate }) {
           </div>
         </div>
         <div className="flex justify-between">
+          {/* Calories */}
           <div>
             <div
               className="radial-progress text-primary text-center"
@@ -171,7 +172,7 @@ function LogCard({ log, onDelete, onUpdate }) {
               max={MAX_SERVINGS}
               value={updatedServings}
               onChange={(e) => setUpdatedServings(e.target.value)}
-              className="w-full p-2 border rounded-md mb-4"
+              className="w-full p-2 border rounded-md mb-4 bg-white"
             />
             <div className="flex justify-end">
               <button
