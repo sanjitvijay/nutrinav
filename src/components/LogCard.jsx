@@ -10,6 +10,9 @@ function LogCard({ log, onDelete, onUpdate }) {
   const { userInfo } = useUserInfo();
   const { dailyFat, dailyCarbs, dailyProtein, dailyCalories } = userInfo;
 
+  // Define maximum servings
+  const MAX_SERVINGS = 10; // Set your desired maximum limit here
+
   // State for modal visibility and updated servings
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatedServings, setUpdatedServings] = useState(servings);
@@ -25,8 +28,8 @@ function LogCard({ log, onDelete, onUpdate }) {
   const handleUpdate = () => {
     const newServings = Number(updatedServings);
 
-    if (isNaN(newServings) || newServings <= 0) {
-      alert("Please enter a valid number of servings.");
+    if (isNaN(newServings) || newServings <= 0 || newServings > MAX_SERVINGS) {
+      alert(`Please enter a valid number of servings (1 to ${MAX_SERVINGS}).`);
       return;
     }
 
@@ -165,6 +168,7 @@ function LogCard({ log, onDelete, onUpdate }) {
             <input
               type="number"
               min="1"
+              max={MAX_SERVINGS}
               value={updatedServings}
               onChange={(e) => setUpdatedServings(e.target.value)}
               className="w-full p-2 border rounded-md mb-4"
