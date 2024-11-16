@@ -326,28 +326,30 @@ function CalorieCalc() {
                         </select>
                     </div>
                     
-                    <button 
+                    {/* <button 
                         type="submit" 
                         className="btn btn-primary w-full mt-5 text-white"
                         onClick={() => setActionType('calories')}
                     >
                         Calculate Calories
                     </button>
-
+                        
                     <button 
                         type="submit" 
                         className="btn btn-secondary w-full mt-5 text-white"
                         onClick={() => setActionType('macros')}
                     >
                         Calculate Macronutrients
-                    </button>
+                    </button> */}
                     <button 
                         type="submit" 
-                        className="btn btn-accent w-full mt-5 text-white"
+                        className="btn btn-primary w-full mt-5 text-white"
                         onClick={() => setActionType('both')}
                     >
-                        Calculate Both
+                        Calculate
                     </button>
+
+                    <button onClick={() => navigate(-1)} className="btn btn-secondary  mt-5 text-white w-full"> Back </button>
 
                 </form>
             </div>
@@ -415,7 +417,7 @@ function CalorieCalc() {
                     }, 1000); // Optional: Navigate after update
                 }}
             >
-                Update Both
+                Update
             </button>
         </div>
         <form method="dialog" className="modal-backdrop">

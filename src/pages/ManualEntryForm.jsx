@@ -222,6 +222,15 @@ function ManualEntryForm() {
                         Add Food
                     </button>
                 </div>
+                <div className="flex justify-center">
+                
+                <button 
+                    className="btn btn-secondary mt-5 text-lg text-white"
+                    onClick={() => navigate(-1)} 
+                > 
+                    Back 
+                </button>
+            </div>
             </form>            
         </div>
     );

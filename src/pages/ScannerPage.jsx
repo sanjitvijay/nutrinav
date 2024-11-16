@@ -100,8 +100,8 @@ const ScannerPage = () => {
         <header className="App-header">
           {screen === 'choice' && (
             <div>
-              <button className="btn btn-primary text-white" onClick={() => handleScreenChoice('scanner')}>Scan Barcode</button>
-              <button className="btn btn-primary text-white" onClick={() => handleScreenChoice('manual')}>Enter Food Name</button>
+              <button className="btn btn-primary text-white mr-2" onClick={() => handleScreenChoice('scanner')}>Scan Barcode</button>
+              <button className="btn btn-primary text-white mr-2" onClick={() => handleScreenChoice('manual')}>Enter Food Name</button>
               <button onClick={() => navigate(-1)} className="btn btn-secondary text-white"> Back </button>
             </div>
           )}
