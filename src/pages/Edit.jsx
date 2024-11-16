@@ -6,7 +6,7 @@ function Edit() {
     return (
         <div>
             <div>
-                <h1 className="text-primary font-bold text-3xl">Profile</h1>
+                <h1 className="text-primary font-bold text-3xl">Edit Daily Values</h1>
                 <button 
                     className="btn btn-primary mt-5 text-lg"
                     onClick={() => navigate('/user-info')}
