@@ -1,90 +1,100 @@
+// AddFood.jsx
 import supabaseClient from "../supabaseClient";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ItemCard from "../components/ItemCard";
 import CustomDropdown from "../components/CustomDropdown";
 import MenuDisplay from "../components/MenuDisplay";
 import ToggleIcon from "../components/ToggleIcon";
 
 function AddFood() {
-    const supabase = supabaseClient()
-    const navigate = useNavigate()
+    const supabase = supabaseClient();
+    const navigate = useNavigate();
 
-    const [diningHall, setDiningHall] = useState('Bursley')
+    const [diningHall, setDiningHall] = useState('Bursley');
 
-    const [breakfast, setBreakfast] = useState([])
-    const [brunch, setBrunch] = useState([])
-    const [lunch, setLunch] = useState([])
-    const [dinner, setDinner] = useState([])
+    const [breakfast, setBreakfast] = useState({});
+    const [brunch, setBrunch] = useState({});
+    const [lunch, setLunch] = useState({});
+    const [dinner, setDinner] = useState({});
 
-    const [showBreakfast, setShowBreakfast] = useState(false)
-    const [showBrunch, setShowBrunch] = useState(false)
-    const [showLunch, setShowLunch] = useState(false)
-    const [showDinner, setShowDinner] = useState(false)
+    const [showBreakfast, setShowBreakfast] = useState(false);
+    const [showBrunch, setShowBrunch] = useState(false);
+    const [showLunch, setShowLunch] = useState(false);
+    const [showDinner, setShowDinner] = useState(false);
 
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     const MealTimes = {
         BREAKFAST: 'is_breakfast',
         BRUNCH: 'is_brunch',
         LUNCH: 'is_lunch',
         DINNER: 'is_dinner'
-    }
+    };
 
-    useEffect(()=>{
-        fetchMenu(MealTimes.BREAKFAST)
-        fetchMenu(MealTimes.BRUNCH)
-        fetchMenu(MealTimes.LUNCH)
-        fetchMenu(MealTimes.DINNER)
-    },[diningHall])
-    
+    useEffect(() => {
+        fetchMenu(MealTimes.BREAKFAST);
+        fetchMenu(MealTimes.BRUNCH);
+        fetchMenu(MealTimes.LUNCH);
+        fetchMenu(MealTimes.DINNER);
+    }, [diningHall]);
+
     const fetchMenu = async (mealTime) => {
-        setLoading(true)
-        let mealCondition = ''
+        setLoading(true);
+        let mealCondition = '';
         switch(mealTime){
             case MealTimes.BREAKFAST: 
-                mealCondition = MealTimes.BREAKFAST
+                mealCondition = MealTimes.BREAKFAST;
                 break;
             case MealTimes.BRUNCH: 
-                mealCondition = MealTimes.BRUNCH
+                mealCondition = MealTimes.BRUNCH;
                 break;
             case MealTimes.LUNCH: 
-                mealCondition = MealTimes.LUNCH
+                mealCondition = MealTimes.LUNCH;
                 break;
             default: 
-                mealCondition = MealTimes.DINNER
+                mealCondition = MealTimes.DINNER;
         }
 
         const { data, error } = await supabase
             .from(diningHall)
             .select('*')
-            .eq(mealCondition, true)
+            .eq(mealCondition, true);
 
         if (error) {
-            console.log('Error:', error)
+            console.log('Error:', error);
         } else {
+            // Group data by subheader
+            const groupedData = data.reduce((result, item) => {
+                const subheader = item.subheader || 'Others';
+                if (!result[subheader]) {
+                    result[subheader] = [];
+                }
+                result[subheader].push(item);
+                return result;
+            }, {});
+
+            // Update state with grouped data
             switch(mealTime){
                 case MealTimes.BREAKFAST: 
-                    setBreakfast(data)
+                    setBreakfast(groupedData);
                     break;
                 case MealTimes.BRUNCH: 
-                    setBrunch(data)
+                    setBrunch(groupedData);
                     break;
                 case MealTimes.LUNCH: 
-                    setLunch(data)
+                    setLunch(groupedData);
                     break;
                 default: 
-                    setDinner(data)
+                    setDinner(groupedData);
             }
         }
-        setTimeout(() => {
-            setLoading(false)
-        }, 500); 
-    }
+        setLoading(false);
+    };
 
     const onChange = (option) => {
-        setDiningHall(option)
-    }
+        setDiningHall(option);
+    };
+
     return (
         <div className="pb-5">
             <div className="flex justify-between items-center">
@@ -95,15 +105,13 @@ function AddFood() {
                     />
                 </div> 
                 <div>
-                        <button 
-                            className="btn btn-primary text-white"
-                            onClick={() => navigate('/choose')}
-                        >
-                            Add More
-                        </button>
+                    <button 
+                        className="btn btn-primary text-white"
+                        onClick={() => navigate('/choose')}
+                    >
+                        Add More
+                    </button>
                 </div>
-                
-               
             </div>
             {loading ? 
                 <div className="flex justify-center mt-3">
@@ -111,7 +119,7 @@ function AddFood() {
                 </div> 
                 : 
                 <>
-                    {breakfast.length !== 0 && 
+                    {breakfast && Object.keys(breakfast).length > 0 && 
                         <div>
                             <button className="flex items-center mt-5" onClick={() => setShowBreakfast(!showBreakfast)}>
                                 <h1 className="text-primary font-bold text-3xl">Breakfast</h1>
@@ -122,7 +130,7 @@ function AddFood() {
                         </div>
                     }
 
-                    {brunch.length !== 0 && 
+                    {brunch && Object.keys(brunch).length > 0 && 
                         <div>
                             <button className="flex items-center mt-5" onClick={() => setShowBrunch(!showBrunch)}>
                                 <h1 className="text-primary font-bold text-3xl">Brunch</h1>
@@ -133,19 +141,18 @@ function AddFood() {
                         </div>
                     }
 
-                    {lunch.length !== 0 && 
+                    {lunch && Object.keys(lunch).length > 0 && 
                         <div>
                             <button className="flex items-center mt-5" onClick={() => setShowLunch(!showLunch)}>
                                 <h1 className="text-primary font-bold text-3xl">Lunch</h1>
                                 <ToggleIcon toggle={showLunch}/>
-                                
                             </button>
                             <div className="divider -mt-1"></div> 
                             {showLunch && <MenuDisplay menu={lunch} time={'lunch'}/>}
                         </div>
                     }
 
-                    {dinner.length !== 0 && 
+                    {dinner && Object.keys(dinner).length > 0 && 
                         <div>
                             <button className="flex items-center mt-5" onClick={() => setShowDinner(!showDinner)}>
                                 <h1 className="text-primary font-bold text-3xl">Dinner</h1>   
@@ -155,15 +162,6 @@ function AddFood() {
                             {showDinner && <MenuDisplay menu={dinner} time={'dinner'}/>}
                         </div>
                     }
-
-                    {/* <div className="flex justify-center">
-                        <button 
-                            className="btn btn-primary text-white"
-                            onClick={() => navigate('/manual-entry')}
-                        >
-                            Manual Entry
-                        </button>
-                    </div> */}
                 </>
             }
         </div>
