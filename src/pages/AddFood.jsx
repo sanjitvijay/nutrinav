@@ -1,14 +1,16 @@
 // AddFood.jsx
 import supabaseClient from "../supabaseClient";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomDropdown from "../components/CustomDropdown";
 import MenuDisplay from "../components/MenuDisplay";
 import ToggleIcon from "../components/ToggleIcon";
 
+
 function AddFood() {
     const supabase = supabaseClient();
     const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState('');
 
     const [diningHall, setDiningHall] = useState('Bursley');
 
@@ -113,6 +115,17 @@ function AddFood() {
                     </button>
                 </div>
             </div>
+            
+            <div className="mt-4">
+                <input
+                    type="text"
+                    placeholder="Search for food items..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="input input-bordered w-full"
+                />
+            </div>
+
             {loading ? 
                 <div className="flex justify-center mt-3">
                     <span className="loading loading-spinner loading-lg text-secondary"></span>
@@ -126,7 +139,7 @@ function AddFood() {
                                 <ToggleIcon toggle={showBreakfast}/>
                             </button>
                             <div className="divider -mt-1"></div> 
-                            {showBreakfast && <MenuDisplay menu={breakfast} time={'breakfast'}/>}
+                            {showBreakfast && <MenuDisplay menu={breakfast} time={'breakfast'} searchQuery={searchQuery}/>}
                         </div>
                     }
 
@@ -137,7 +150,7 @@ function AddFood() {
                                 <ToggleIcon toggle={showBrunch}/>
                             </button>
                             <div className="divider -mt-1"></div> 
-                            {showBrunch && <MenuDisplay menu={brunch} time={'brunch'}/>}
+                            {showBrunch && <MenuDisplay menu={brunch} time={'brunch'} searchQuery={searchQuery}/>}
                         </div>
                     }
 
@@ -148,7 +161,7 @@ function AddFood() {
                                 <ToggleIcon toggle={showLunch}/>
                             </button>
                             <div className="divider -mt-1"></div> 
-                            {showLunch && <MenuDisplay menu={lunch} time={'lunch'}/>}
+                            {showLunch && <MenuDisplay menu={lunch} time={'lunch'} searchQuery={searchQuery}/>}
                         </div>
                     }
 
@@ -159,7 +172,7 @@ function AddFood() {
                                 <ToggleIcon toggle={showDinner}/>
                             </button>
                             <div className="divider -mt-1"></div> 
-                            {showDinner && <MenuDisplay menu={dinner} time={'dinner'}/>}
+                            {showDinner && <MenuDisplay menu={dinner} time={'dinner'} searchQuery={searchQuery}/>}
                         </div>
                     }
                 </>
