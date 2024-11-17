@@ -2,13 +2,28 @@
 import React from 'react';
 import ItemCard from './ItemCard';
 
-function MenuDisplay({ menu, time, searchQuery }) {
+function MenuDisplay({ menu, time, searchQuery, filterCriteria }) {
     const filteredMenu = {};
 
     Object.keys(menu).forEach((subheader) => {
-        const items = menu[subheader].filter((item) =>
+        let items = menu[subheader].filter((item) =>
             item.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
+
+        // Sort items based on filterCriteria
+        if (filterCriteria && filterCriteria.nutrient) {
+            items.sort((a, b) => {
+                const aValue = Number(a.nutrition_facts[filterCriteria.nutrient]) || 0;
+                const bValue = Number(b.nutrition_facts[filterCriteria.nutrient]) || 0;
+
+                if (filterCriteria.order === 'asc') {
+                    return aValue - bValue;
+                } else {
+                    return bValue - aValue;
+                }
+            });
+        }
+
         if (items.length > 0) {
             filteredMenu[subheader] = items;
         }

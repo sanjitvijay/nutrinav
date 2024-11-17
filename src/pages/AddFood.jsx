@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import CustomDropdown from "../components/CustomDropdown";
 import MenuDisplay from "../components/MenuDisplay";
 import ToggleIcon from "../components/ToggleIcon";
+import { CiFilter } from "react-icons/ci";
 
 
 function AddFood() {
@@ -25,7 +26,15 @@ function AddFood() {
     const [showDinner, setShowDinner] = useState(false);
 
     const [loading, setLoading] = useState(false);
+    
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [filterCriteria, setFilterCriteria] = useState({
+        nutrient: '',
+        order: 'asc', // 'asc' for smallest to largest, 'desc' for largest to smallest
+    });
 
+
+    
     const MealTimes = {
         BREAKFAST: 'is_breakfast',
         BRUNCH: 'is_brunch',
@@ -116,7 +125,7 @@ function AddFood() {
                 </div>
             </div>
             
-            <div className="mt-4">
+            <div className="mt-4 flex items-center">
                 <input
                     type="text"
                     placeholder="Search for food items..."
@@ -124,8 +133,68 @@ function AddFood() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="input input-bordered w-full"
                 />
+                <button
+                    className="ml-2 btn btn-secondary"
+                    onClick={() => setIsFilterOpen(true)}
+                >
+                    <CiFilter size={24} />
+                </button>
             </div>
 
+            {isFilterOpen && (
+        <dialog id="filter_modal" className="modal" open>
+            <div className="modal-box">
+                <h3 className="font-bold text-xl mb-4">Filter Options</h3>
+                <div className="mb-4">
+                    <label className="block mb-2">Select Nutrient:</label>
+                    <select
+                        value={filterCriteria.nutrient}
+                        onChange={(e) =>
+                            setFilterCriteria({ ...filterCriteria, nutrient: e.target.value })
+                        }
+                        className="select select-bordered w-full"
+                    >
+                        <option value="">None</option>
+                        <option value="calories">Calories</option>
+                        <option value="protein">Protein</option>
+                        <option value="total_fat">Fat</option>
+                        <option value="total_carbohydrate">Carbs</option>
+                    </select>
+                </div>
+                <div className="mb-4">
+                    <label className="block mb-2">Select Order:</label>
+                    <select
+                        value={filterCriteria.order}
+                        onChange={(e) =>
+                            setFilterCriteria({ ...filterCriteria, order: e.target.value })
+                        }
+                        className="select select-bordered w-full"
+                    >
+                        <option value="asc">Smallest to Largest</option>
+                        <option value="desc">Largest to Smallest</option>
+                    </select>
+                </div>
+                <div className="flex justify-end">
+                    <button
+                        onClick={() => setIsFilterOpen(false)}
+                        className="btn btn-secondary mr-2"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        onClick={() => {
+                            setIsFilterOpen(false);
+                            // Trigger a re-render by updating filterCriteria state
+                            setFilterCriteria({ ...filterCriteria });
+                        }}
+                        className="btn btn-primary"
+                    >
+                        Apply
+                    </button>
+                </div>
+            </div>
+        </dialog>
+    )}
             {loading ? 
                 <div className="flex justify-center mt-3">
                     <span className="loading loading-spinner loading-lg text-secondary"></span>
@@ -139,7 +208,7 @@ function AddFood() {
                                 <ToggleIcon toggle={showBreakfast}/>
                             </button>
                             <div className="divider -mt-1"></div> 
-                            {showBreakfast && <MenuDisplay menu={breakfast} time={'breakfast'} searchQuery={searchQuery}/>}
+                            {showBreakfast && <MenuDisplay menu={breakfast} time={'breakfast'} searchQuery={searchQuery} filterCriteria={filterCriteria}/>}
                         </div>
                     }
 
@@ -150,7 +219,7 @@ function AddFood() {
                                 <ToggleIcon toggle={showBrunch}/>
                             </button>
                             <div className="divider -mt-1"></div> 
-                            {showBrunch && <MenuDisplay menu={brunch} time={'brunch'} searchQuery={searchQuery}/>}
+                            {showBrunch && <MenuDisplay menu={brunch} time={'brunch'} searchQuery={searchQuery} filterCriteria={filterCriteria}/>}
                         </div>
                     }
 
@@ -161,7 +230,7 @@ function AddFood() {
                                 <ToggleIcon toggle={showLunch}/>
                             </button>
                             <div className="divider -mt-1"></div> 
-                            {showLunch && <MenuDisplay menu={lunch} time={'lunch'} searchQuery={searchQuery}/>}
+                            {showLunch && <MenuDisplay menu={lunch} time={'lunch'} searchQuery={searchQuery} filterCriteria={filterCriteria}/>}
                         </div>
                     }
 
@@ -172,7 +241,7 @@ function AddFood() {
                                 <ToggleIcon toggle={showDinner}/>
                             </button>
                             <div className="divider -mt-1"></div> 
-                            {showDinner && <MenuDisplay menu={dinner} time={'dinner'} searchQuery={searchQuery}/>}
+                            {showDinner && <MenuDisplay menu={dinner} time={'dinner'} searchQuery={searchQuery} filterCriteria={filterCriteria}/>}
                         </div>
                     }
                 </>
