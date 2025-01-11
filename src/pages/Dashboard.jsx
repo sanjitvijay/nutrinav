@@ -96,10 +96,12 @@ function Dashboard() {
                             >
                                 <div>
                                     <span className="text-lg text-secondary font-bold">
-                                        {Math.round(dailyCalories - calories)}
+                                        {Math.abs(Math.round(dailyCalories - calories))}
                                     </span>
                                     <br />
-                                    <span className="text-xs">remaining</span>
+                                    <span className="text-xs">
+                                        {dailyCalories - calories < 0 ? "over" : "remaining"}
+                                    </span>
                                 </div>
                             </div>
 
