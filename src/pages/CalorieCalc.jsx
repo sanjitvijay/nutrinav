@@ -19,6 +19,7 @@ function CalorieCalc() {
 
     const [results, setResults] = useState({});
     const [modalOpen, setModalOpen] = useState(false);
+    const [combinedModalOpen, setCombinedModalOpen] = useState(false);
     const [caloriesModalOpen, setCaloriesModalOpen] = useState(false);
     const [macronutrientsModalOpen, setMacronutrientsModalOpen] = useState(false);
     const [actionType, setActionType] = useState(''); // 'calories' or 'macros'
@@ -33,102 +34,75 @@ function CalorieCalc() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+    
         const heightInInches = parseInt(heightFeet * 12) + parseInt(heightInches);
-        
         const heightInCentimeters = heightInInches * 2.54;
-    
-        const heightFactor = heightInCentimeters * 6.25;
-    
         const kilograms = weight * 0.453592;
     
+        const heightFactor = heightInCentimeters * 6.25;
         const weightFactor = kilograms * 10;
-
+    
         // Calculate BMR using Mifflin-St Jeor Equation
         const bmr = gender === 'male'
-            ? (weightFactor) + (heightFactor) - (5 * age) + 5
-            : (weightFactor) + (heightFactor) - (5 * age) - 161;
-
-        let maintenanceCalories = bmr;
-        let tdee = bmr;
-        console.log(maintenanceCalories);
+            ? weightFactor + heightFactor - (5 * age) + 5
+            : weightFactor + heightFactor - (5 * age) - 161;
     
         // Adjust for activity level
-        if (activityLevel === 'basal') {
-            maintenanceCalories *= 1;
-            tdee = bmr * 1;
-        } else if (activityLevel === 'sedentary') {
-            maintenanceCalories *= 1.19978187098;
-            tdee = bmr * 1.19978187098;
-        } else if (activityLevel === 'light') {
-            maintenanceCalories *= 1.37505121057;
-            tdee = bmr * 1.37505121057;
-        } else if (activityLevel === 'moderate') {
-            maintenanceCalories *= 1.46479393084;
-            tdee = bmr * 1.46479393084;
-        } else if (activityLevel === 'active') {
-            maintenanceCalories *= 1.54971825002;
-            tdee = bmr * 1.54971825002;
-        } else if (activityLevel === 'very-active') {
-            maintenanceCalories *= 1.72498758961;
-            tdee = bmr * 1.72498758961;
-        } else if (activityLevel === 'extra-active') {
-            maintenanceCalories *= 1.90025692919;
-            tdee = bmr * 1.90025692919;
-        }
-
-
-
+        const activityFactors = {
+            basal: 1,
+            sedentary: 1.19978187098,
+            light: 1.37505121057,
+            moderate: 1.46479393084,
+            active: 1.54971825002,
+            veryActive: 1.72498758961,
+            extraActive: 1.90025692919,
+        };
+        const maintenanceCalories = bmr * activityFactors[activityLevel];
+        let selectedCalories;
+    
         // Calories for weight loss and gain
-        const mildWeightLossCalories = maintenanceCalories - 250;
-        const weightLossCalories = maintenanceCalories - 500;
-        const mildWeightGainCalories = maintenanceCalories + 250;
-        const weightGainCalories = maintenanceCalories + 500;
-
-        let carbPercentage = 0.45;
-        let proteinPercentage = 0.25;
-        let fatPercentage = 0.30;
-
         if (goal === 'maintain') {
-            carbPercentage = 0.45;
-            proteinPercentage = 0.25;
-            fatPercentage = 0.30;
+            selectedCalories = Math.round(maintenanceCalories);
         } else if (goal === 'mild_loss') {
-            carbPercentage = 0.40; // Adjusted for mild weight loss
-            proteinPercentage = 0.35; // Adjusted for mild weight loss
-            fatPercentage = 0.25; // Adjusted for mild weight loss
+            selectedCalories = Math.round(maintenanceCalories - 250);
         } else if (goal === 'weight_loss') {
-            carbPercentage = 0.30; // Adjusted for weight loss
-            proteinPercentage = 0.40; // Adjusted for weight loss
-            fatPercentage = 0.30; // Adjusted for weight loss
+            selectedCalories = Math.round(maintenanceCalories - 500);
         } else if (goal === 'mild_gain') {
-            carbPercentage = 0.55; // Adjusted for mild weight gain
-            proteinPercentage = 0.20; // Adjusted for mild weight gain
-            fatPercentage = 0.25; // Adjusted for mild weight gain
+            selectedCalories = Math.round(maintenanceCalories + 250);
         } else if (goal === 'weight_gain') {
-            carbPercentage = 0.60; // Adjusted for weight gain
-            proteinPercentage = 0.20; // Adjusted for weight gain
-            fatPercentage = 0.20; // Adjusted for weight gain
+            selectedCalories = Math.round(maintenanceCalories + 500);
         }
     
-        // Update state with results
+        // Macronutrient percentages based on goal
+        const macronutrientPercentages = {
+            maintain: { carbs: 0.45, protein: 0.25, fat: 0.30 },
+            mild_loss: { carbs: 0.40, protein: 0.35, fat: 0.25 },
+            weight_loss: { carbs: 0.30, protein: 0.40, fat: 0.30 },
+            mild_gain: { carbs: 0.55, protein: 0.20, fat: 0.25 },
+            weight_gain: { carbs: 0.60, protein: 0.20, fat: 0.20 },
+        };
+        const { carbs, protein, fat } = macronutrientPercentages[goal];
+    
+        // Calculate macronutrients
+        const tdee = selectedCalories; // Use selected calories for macronutrient calculations
         setResults({
-            maintainWeight: Math.round(maintenanceCalories),
-            mildWeightLoss: Math.round(mildWeightLossCalories),
-            weightLoss: Math.round(weightLossCalories),
-            mildWeightGain: Math.round(mildWeightGainCalories),
-            weightGain: Math.round(weightGainCalories),
-            carbs: Math.round(tdee * carbPercentage / 4), // 4 calories per gram of carbohydrates
-            protein: Math.round(tdee * proteinPercentage / 4), // 4 calories per gram of protein
-            fat: Math.round(tdee * fatPercentage / 9) // 9 calories per gram of fat
+            calories: selectedCalories,
+            carbs: Math.round((tdee * carbs) / 4),       // 4 calories per gram of carbs
+            protein: Math.round((tdee * protein) / 4),   // 4 calories per gram of protein
+            fat: Math.round((tdee * fat) / 9),           // 9 calories per gram of fat
         });
-
+    
         if (actionType === 'calories') {
             setCaloriesModalOpen(true);
         } else if (actionType === 'macros') {
             setMacronutrientsModalOpen(true);
+        } else if (actionType === 'both') {
+            setCaloriesModalOpen(false);
+            setMacronutrientsModalOpen(false);
+            setCombinedModalOpen(true);
         }
     };
+    
 
     const updateCaloriesAndClose = async (calories) => {
         try {
@@ -171,6 +145,32 @@ function CalorieCalc() {
         } catch (error) {
             console.error('Error updating daily calories:', error);
             toast.error('Error updating daily calories');
+        }
+    };
+    
+    const updateCaloriesAndMacros = async (calories, carbs, fat, protein) => {
+        try {
+            // Combine calories and macronutrient updates
+            const updatedFormData = {
+                ...formData,
+                dailyCalories: calories,
+                dailyCarbs: carbs,
+                dailyFat: fat,
+                dailyProtein: protein
+            };
+    
+            // Perform a single upsert with all updated values
+            const { error } = await supabase
+                .from('users')
+                .upsert([{ id: user.id, dailyValues: updatedFormData }]);
+    
+            if (error) throw error;
+    
+            setFormData(updatedFormData);
+            toast.success('Daily values updated successfully');
+        } catch (error) {
+            console.error('Error updating daily values:', error);
+            toast.error('Failed to update daily values');
         }
     };
     
@@ -326,21 +326,31 @@ function CalorieCalc() {
                         </select>
                     </div>
                     
-                    <button 
+                    {/* <button 
                         type="submit" 
                         className="btn btn-primary w-full mt-5 text-white"
                         onClick={() => setActionType('calories')}
                     >
                         Calculate Calories
                     </button>
-
+                        
                     <button 
                         type="submit" 
                         className="btn btn-secondary w-full mt-5 text-white"
                         onClick={() => setActionType('macros')}
                     >
                         Calculate Macronutrients
+                    </button> */}
+                    <button 
+                        type="submit" 
+                        className="btn btn-primary w-full mt-5 text-white"
+                        onClick={() => setActionType('both')}
+                    >
+                        Calculate
                     </button>
+
+                    <button onClick={() => navigate(-1)} className="btn btn-secondary  mt-5 text-white w-full"> Back </button>
+
                 </form>
             </div>
             {/* Calories Modal */}
@@ -349,19 +359,19 @@ function CalorieCalc() {
                     <div className="modal-box">
                         <h3 className="font-bold text-lg text-center">Calorie Calculation Results</h3>
                         {goal === 'maintain' && (
-                            <button className="btn btn-primary w-full mb-2 text-white" onClick={() => updateCaloriesAndClose(results.maintainWeight)}>Maintain Weight: {results.maintainWeight} Calories/day</button>
+                            <button className="btn btn-primary w-full mb-2 text-white" onClick={() => updateCaloriesAndClose(results.maintainWeight)}>Maintain Weight: {results.calories} Calories/day</button>
                         )}
                         {goal === 'mild_loss' && (
-                            <button className="btn btn-primary w-full mb-2 text-white" onClick={() => updateCaloriesAndClose(results.mildWeightLoss)}>Mild Weight Loss: {results.mildWeightLoss} Calories/day</button>
+                            <button className="btn btn-primary w-full mb-2 text-white" onClick={() => updateCaloriesAndClose(results.mildWeightLoss)}>Mild Weight Loss: {results.calories} Calories/day</button>
                         )}
                         {goal === 'weight_loss' && (
-                            <button className="btn btn-primary w-full mb-2 text-white" onClick={() => updateCaloriesAndClose(results.weightLoss)}>Weight Loss: {results.weightLoss} Calories/day</button>
+                            <button className="btn btn-primary w-full mb-2 text-white" onClick={() => updateCaloriesAndClose(results.weightLoss)}>Weight Loss: {results.calories} Calories/day</button>
                         )}
                         {goal === 'mild_gain' && (
-                            <button className="btn btn-primary w-full mb-2 text-white" onClick={() => updateCaloriesAndClose(results.mildWeightGain)}>Mild Weight Gain: {results.mildWeightGain} Calories/day</button>
+                            <button className="btn btn-primary w-full mb-2 text-white" onClick={() => updateCaloriesAndClose(results.mildWeightGain)}>Mild Weight Gain: {results.calories} Calories/day</button>
                         )}
                         {goal === 'weight_gain' && (
-                            <button className="btn btn-primary w-full mb-2 text-white" onClick={() => updateCaloriesAndClose(results.weightGain)}>Weight Gain: {results.weightGain} Calories/day</button>
+                            <button className="btn btn-primary w-full mb-2 text-white" onClick={() => updateCaloriesAndClose(results.weightGain)}>Weight Gain: {results.calories} Calories/day</button>
                         )}
                     </div>
                     <form method="dialog" className="modal-backdrop">
@@ -383,6 +393,40 @@ function CalorieCalc() {
                     </form>
                 </dialog>
             )}
+            {/* Combined Modal for Calories and Macronutrients */}
+{/* Combined Modal for Calories and Macronutrients */}
+{combinedModalOpen && (
+    <dialog className="modal" open>
+        <div className="modal-box">
+            <h3 className="font-bold text-lg text-center">Calories and Macronutrient Calculation Results</h3>
+            <p className="mb-2">Calories: {results.calories} Calories/day</p>
+            <p className="mb-2 mt-4">Macronutrients:</p>
+            <ul>
+                <li>Carbs: {results.carbs} g</li>
+                <li>Protein: {results.protein} g</li>
+                <li>Fat: {results.fat} g</li>
+            </ul>
+            <button 
+                className="btn btn-primary w-full mt-5 text-white"
+                onClick={async () => {
+                    await updateCaloriesAndMacros(results.calories, results.carbs, results.fat, results.protein);
+                    
+                    setCombinedModalOpen(false); // Close modal
+                    setTimeout(() => {
+                        navigate('/dashboard');
+                    }, 1000); // Optional: Navigate after update
+                }}
+            >
+                Update
+            </button>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+            <button onClick={() => setCombinedModalOpen(false)}>Close</button>
+        </form>
+    </dialog>
+)}
+
+
         </div>
     );
 }

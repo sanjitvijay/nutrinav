@@ -17,6 +17,7 @@ function Home() {
             <div className="px-9">
                 <h2 className="text-3xl font-bold text-primary text-center">Eat Smart, Track Anywhere: <span className="text-secondary">Your Campus Food Diary</span> </h2>
                 <p className="text-lg text-neutral mt-5 text-center font-semibold">Record your dining hall meals & meet your dietary needs.</p>
+                <p className="text-lg text-neutral mt-5 text-center font-semibold"> We're not stopping here! Our team is hard at work developing a mobile app that will take NutriNav to the next level.</p>
             </div>
 
             <div className="flex justify-center mt-5 mb-5">
