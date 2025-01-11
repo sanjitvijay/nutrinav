@@ -8,7 +8,7 @@ function Profile() {
             <div>
                 <h1 className="text-primary font-bold text-3xl">Profile</h1>
                 <button 
-                    className="btn btn-primary mt-5 text-lg"
+                    className="btn btn-primary mt-5 text-lg text-white"
                     onClick={() => navigate('/user-info')}
                 >
                     Update Daily Values <RightArrow />
@@ -16,10 +16,10 @@ function Profile() {
             </div>
             <div>
                 <button 
-                    className="btn btn-primary mt-5 text-lg"
+                    className="btn btn-primary mt-5 text-lg text-white"
                     onClick={() => navigate('/calorie-calc')}
                 >
-                    Maintenance Calorie Calculator <RightArrow />
+                    Calorie Calculator <RightArrow />
                 </button>
             </div>
             {/* <div>
@@ -30,6 +30,14 @@ function Profile() {
                     Scanner <RightArrow />
                 </button>
             </div> */}
+            <div>
+                <button 
+                    className="btn btn-secondary mt-5 text-lg text-white"
+                    onClick={() => navigate(-1)} 
+                > 
+                    Back 
+                </button>
+            </div>
         </div>
     );
 }

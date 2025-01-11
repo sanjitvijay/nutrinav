@@ -134,7 +134,7 @@ function AddFood() {
                     className="input input-bordered w-full"
                 />
                 <button
-                    className="ml-2 btn btn-secondary"
+                    className="ml-2 btn btn-secondary text-white"
                     onClick={() => setIsFilterOpen(true)}
                 >
                     <CiFilter size={24} />
@@ -177,7 +177,7 @@ function AddFood() {
                 <div className="flex justify-end">
                     <button
                         onClick={() => setIsFilterOpen(false)}
-                        className="btn btn-secondary mr-2"
+                        className="btn btn-secondary mr-2 text-white"
                     >
                         Close
                     </button>

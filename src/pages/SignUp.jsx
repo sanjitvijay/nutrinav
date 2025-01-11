@@ -47,7 +47,7 @@ function SignUp() {
             toast.error('Error signing up')
         }
         else{
-            navigate('/user-info')
+            navigate('/calorie-calc')
         }
     }
 
