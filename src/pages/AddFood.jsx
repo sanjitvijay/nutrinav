@@ -179,9 +179,9 @@ function AddFood() {
                         onClick={() => setIsFilterOpen(false)}
                         className="btn btn-secondary mr-2"
                     >
-                        Cancel
+                        Close
                     </button>
-                    <button
+                    {/* <button
                         onClick={() => {
                             setIsFilterOpen(false);
                             // Trigger a re-render by updating filterCriteria state
@@ -190,7 +190,7 @@ function AddFood() {
                         className="btn btn-primary"
                     >
                         Apply
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </dialog>
